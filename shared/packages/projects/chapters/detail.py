@@ -35,12 +35,12 @@ class Detail(Basechapter):
                 "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
             },
         }
-        record = Project.objects.get(id=self.pk)
-        if record.is_master:
-            self.tools['delete'].update({
-                "url": "",
-                "disabled": True,
-            })
+        # record = Project.objects.get(id=self.pk)
+        # if record.is_master:
+        #     self.tools['delete'].update({
+        #         "url": "",
+        #         "disabled": True,
+        #     })
 
         self.fragments = [
             {

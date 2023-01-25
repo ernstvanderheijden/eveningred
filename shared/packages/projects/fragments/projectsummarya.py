@@ -13,7 +13,7 @@ class ProjectsummaryA(Basepackage, GlobalSummary):
         self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.columnfields = {  # Fieldtypes are: boolean, boolean_true, char, date, email, number, decimal, phone, sex, textarea, textarea_html, pill_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
             "description": {"caption": "Omschrijving", "fieldtype": "char", },
-            "relationid_relationnamename": {"caption": "Relatie", "fieldtype": "char", },
+            "relationid__relationname": {"caption": "Relatie", "fieldtype": "char", },
             "startdate": {"caption": "Startdatum", "fieldtype": "date", },
         }
         records = Project.objects.filter(id=pk).values(*self.columnfields.keys(), 'id')

@@ -176,4 +176,5 @@ def update_address(instance):
         instance.city = relation.city
         instance.latitude = relation.latitude
         instance.longitude = relation.longitude
+    instance.fulladdress = get_fulladdress(instance.street, instance.number, instance.suffix, instance.postalcode, instance.city)
     return instance

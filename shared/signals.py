@@ -68,14 +68,13 @@ def save_cre_and_upd_paymenttype(sender, instance, **kwargs):
 def save_cre_and_upd_projcet(sender, instance, **kwargs):
     update_instance(instance)
     update_address(instance)
-    get_fulladdress(instance.street, instance.number, instance.suffix, instance.postalcode, instance.city)
 
 
 # Relation
 @receiver(pre_save, sender=Relation)
 def save_cre_and_upd_relation(sender, instance, **kwargs):
     update_instance(instance)
-    get_fulladdress(instance.street, instance.number, instance.suffix, instance.postalcode, instance.city)
+    instance.fulladdress = get_fulladdress(instance.street, instance.number, instance.suffix, instance.postalcode, instance.city)
 
 
 # Unittype
