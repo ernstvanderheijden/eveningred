@@ -1,0 +1,14 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            {% for key, data in ctx.form_text_top.items %}
+                <p class="note note-{{ data.textcolor }}">
+                    {% note_icon data.textcolor %}
+                    <span>
+                        {{ data.text | safe }}  {# configer this field in crud.py (e.g.: crudicheckin.py) #}
+                    </span>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>

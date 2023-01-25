@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        {% block login %}
+            {% load static %}
+            <div class="login-body">
+                <div class="login-overlay">
+                    <div class="container-sm text-center login-container">
+                        <div class="row vh-100 justify-content-around form-signin">
+                            <div class="col login-box align-self-center ms-1 me-1">
+                                <img class="mb-6" src="{% static '/img/logo.png' %}" alt="Eveningred" width="350" height="auto">
+                                <div class="login-fields">
+                                    {% if ctx.template_name %}
+                                        {% include ctx.template_inner %}
+                                    {% else %}
+                                        {% include 'login/login.html' %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

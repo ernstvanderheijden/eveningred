@@ -1,0 +1,39 @@
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top m-0 p-0">
+    <div class="container-fluid">
+
+        {% if request.user.is_authenticated %}
+            <button id="toggler" class="btn btn-link" data-mdb-toggle="sidenav" data-mdb-target="#sidenav-1" aria-expanded="false" style="">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="navbar-nav ms-auto d-flex flex-row">
+                {#            <li class="nav-item dropdown">#}
+                {#                <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">#}
+                {#                    <i class="fas fa-bell"></i>#}
+                {#                    <span class="badge rounded-pill badge-notification bg-danger">1</span>#}
+                {#                </a>#}
+                {#                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">#}
+                {#                    <li><a class="dropdown-item" href="#">item1</a></li>#}
+                {#                    <li><a class="dropdown-item" href="#">item2</a></li>#}
+                {#                    <li><a class="dropdown-item" href="#">item3</a></li>#}
+                {#                </ul>#}
+                {#            </li>#}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-mdb-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="https://0.gravatar.com/avatar/8559a4462f9839457fb26fef64b2c6e5?s=32&amp;d=mm&amp;r=g&amp;s=24" class="avatar avatar-24 photo rounded-circle" alt="logo">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                        {% if request.user.is_superuser %}
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Django admin</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'core:template' %}?level={{ ctx.level }}&package=users&chapter=myprofile">Mijn profiel</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Uitloggen</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>

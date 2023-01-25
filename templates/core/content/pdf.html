@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+{% include 'shared/pdf/pdfcss.html' %}
+
+<body>
+
+<header>
+</header>
+<main>
+    <!-- Content for Static Frame 'header_frame' -->
+    {% if ctx.header_frame %}
+        <div id="header_content">{% include ctx.header_frame %}</div>
+    {% endif %}
+    {% if ctx.content_frame %}
+        <div id="main_content">{% include ctx.content_frame %}</div>
+    {% endif %}
+    <!-- Content for Static Frame 'footer_frame' -->
+    {% if ctx.footer_frame_left %}
+        <div id="footer_content_left">{% include ctx.footer_frame_left %}</div>
+    {% endif %}
+    {% if ctx.footer_frame_right %}
+        <div id="footer_content_right">{% include ctx.footer_frame_right %}</div>
+    {% endif %}
+</main>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    {% if ctx.form_text_top %}
+        {% include 'core/messages/form_text_top.html' %}
+    {% endif %}
+    <div class="container-fluid">
+        {% crispy form form.helper %}
+    </div>
+    {% if ctx.form_text_bottom %}
+        {% include 'core/messages/form_text_bottom.html' %}
+    {% endif %}
+
+{% include 'core/ctx/ctx_button.html' %}
+
+{#<form method="POST" action="{% url 'core:delete' record.id %}?level={{ ctx.level|level_higher }}&package={{ ctx.package }}&chapter=list&pk={{ record.id|default_if_none:'' }}&successurl={{ ctx.successurl }}">#}
+{#{% csrf_token %}#}
+{#<button class="deletebtn show-form-delete" type="submit" value="DELETE" onclick="return confirm('Are you sure do you want to delete {{ record }}')">#}
+{#    <i class="fa fa-trash-o"></i>#}
+{#    Delete</button>#}
+{#</form>#}
+
+{% endblock %}

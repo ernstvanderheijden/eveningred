@@ -1,0 +1,19 @@
+<h4 class="text-light mb-5">Inloggen</h4>
+<form method="POST">
+    <div id="form-floating">
+        {% csrf_token %}
+        <div class="form-floating">
+            <input id="id_username" class="form-control" type="text" name="username" placeholder="Gebruikersnaam" spellcheck="false" autofocus>
+            <label for="id_username">Gebruikersnaam</label>
+        </div>
+        <div class="form-floating">
+            <input id="id_password" class="form-control" type="password" name="password" placeholder="Wachtwoord">
+            <label for="id_password">Wachtwoord</label>
+        </div>
+        <button type="submit" class="btn btn-lg btn-outline-primary w-100 mt-4">Login</button>
+    </div>
+</form>
+
+<div class="mt-2">
+    <a class="text-white-50 text-decoration-underline" href="/public/password_forgotten">Wachtwoord vergeten?</a>
+</div>

@@ -1,0 +1,35 @@
+{% load crispy_forms_field %}
+
+{% create_fieldid_from_fieldname field.name as fieldid %}
+
+<div class="form-group pb-3">
+
+    <label for="id_modal_select_{{ fieldid }}" class="form-label">{{ field.label }}
+        {% if field.field.required %}
+            <span class="asteriskField">*</span>
+        {% endif %}
+    </label>
+
+        <label for="id_modal_select_{{ field.name }}"></label>
+        <input id="id_modal_select_{{ field.name }}"
+               name="modal_select_{{ field.name }}"
+               value="{{ field.field.widget.attrs.showvalue }}"
+               type="hidden">
+
+        <div class="d-flex justify-content-between bg-white p-0 form-control modal_select{% if field.field.widget.attrs.onclick %} cursor-pointer{% endif %}{% if form_show_errors and field.errors %} is-invalid{% endif %}"
+             onclick="{{ field.field.widget.attrs.onclick }}"
+        >
+            <div id="id_modal_select_div_{{ field.name }}"
+                 class="p-2">{{ field.field.widget.attrs.showvalue }}
+            </div>
+            {% if field.field.widget.attrs.onclick %}
+                <div class="p-2"><i class="fas fa-search"></i></div>
+            {% endif %}
+        </div>
+        {% if form_show_errors and field.errors %}
+            {% for error in field.errors %}
+                <p id="error_{{ forloop.counter }}_id_modal_select_{{ field.auto_id }}" class="invalid-feedback"><strong>{{ error }}</strong></p>
+            {% endfor %}
+        {% endif %}
+    {% crispy_field field 'type' 'text' 'class' 'form-control' 'id' fieldid %}
+</div>

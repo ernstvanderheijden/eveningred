@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block public %}
+
+    <header>
+    </header>
+
+    <main id="public_main">
+        <input id="activelevel" type="hidden" value="0">
+        <div id="public_body" class="container-fluid p-0 m-0">
+            <div id="0_content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col p-0">
+                            <div id="chapter0">
+                                {% include ctx.template_name_inner %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

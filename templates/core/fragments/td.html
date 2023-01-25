@@ -1,0 +1,197 @@
+{% load l10n %}
+
+{% get_default_value_columnfield ctx.columnfields field as default_value %}
+
+<td>
+    <div id="{{ ctx.level }}_span_{{ field }}_{{ record.id }}" class="d-flex align-items-center">
+        {% if fieldtype == 'sex' %}
+            {% if value == 'F' %}
+                Vrouw
+            {% elif value == 'M' %}
+                Man
+            {% else %}
+                Onbekend
+            {% endif %}
+        {% elif fieldtype == 'date' %}
+            {{ value|date:"d-m-Y" }}
+        {% elif fieldtype == 'datetime' %}
+            {{ value|date:"d-m-Y H:m" }}
+        {% elif fieldtype == 'phone' %}
+            <a href="tel:{{ value }}">{{ value|default_if_none:default_value }}</a>
+        {% elif fieldtype == 'link' %}
+            {{ value|default_if_none:default_value|urlize }}
+        {% elif fieldtype == 'char' %}
+            {{ value|default_if_none:default_value }}
+        {% elif fieldtype == 'pill' %}
+            <span class="badge rounded-pill border badge-light fw-light">{{ value|default_if_none:default_value }}</span>
+        {% elif fieldtype == 'licenseplate' %}
+            {% if value %}
+                <div class="license-plate">
+                    <div class="license-inset">
+                        <div class="license-blue"></div>
+                        <div class="license-text">{{ value|default_if_none:default_value }}</div>
+                    </div>
+                </div>
+            {% else %}
+                {{ default_value }}
+            {% endif %}
+        {% elif fieldtype == 'decimal' %}
+            {% set_value_decimal value as decimal_value %}
+            {{ decimal_value|default_if_none:default_value|floatformat:"2g" }}
+        {% elif fieldtype == 'currency' %}
+            {% set_value_decimal value as decimal_value %}
+            <span class="badge badge-light fw-light">
+                € {{ decimal_value|default_if_none:default_value|floatformat:"2g" }}
+            </span>
+        {% elif fieldtype == 'textarea' %}
+            {{ value|default_if_none:default_value|linebreaksbr }}
+        {% elif fieldtype == 'textarea_html' %}
+            {{ value|default_if_none:default_value|safe }}
+        {% elif fieldtype == 'pill_list' %}
+            {% create_list_from_value value as listvalue %}
+            {% for val in listvalue %}
+                <span class="badge rounded-pill border badge-light fw-light">{{ val }}</span>
+            {% endfor %}
+        {% elif fieldtype == 'status_choice' %}
+            {% fill_status_choice value|default_if_none:default_value %}
+        {% elif fieldtype == 'sendmethod_choice' %}
+            {% fill_sendmethod_choice value|default_if_none:default_value %}
+        {% elif fieldtype == 'sendmethod_choice_with_validation' %}
+            {% fill_sendmethod_choice value|default_if_none:default_value %}
+            {% if value == 1 %}
+                {% if not record.customerid_id__email %}
+                    <span class="badge rounded-pill badge-danger fw-light ms-2"><i class="fas fa-exclamation text-danger me-1"></i>ontbreekt</span>
+                {% else %}
+                    <span class="badge rounded-pill border badge-light fw-light ms-2">{{ record.customerid_id__email }}</span>
+                {% endif %}
+            {% endif %}
+        {% elif fieldtype == 'status_contract' %}
+            {% if value == 0 %}
+                <span class="badge rounded-pill border fw-light badge-info">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% elif value == 5 %}
+                <span class="badge rounded-pill border fw-light badge-primary">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% elif value == 10 %}
+                <span class="badge rounded-pill border fw-light badge-warning">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% elif value == 20 %}
+                <span class="badge rounded-pill border fw-light badge-success">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% elif value == 30 %}
+                <span class="badge rounded-pill border fw-light badge-secondary">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% elif value == 50 %}
+                <span class="badge rounded-pill border fw-light badge-light">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% elif value == 99 %}
+                <span class="badge rounded-pill border fw-light badge-light">{% fill_status_contract value|default_if_none:default_value %}</span>
+            {% endif %}
+        {% elif fieldtype == 'status_invoice' %}
+            {% if value == -1 %}
+                <span class="badge rounded-pill border fw-light badge-light">{% fill_status_invoice value|default_if_none:default_value %}</span>
+            {% elif value == 0 %}
+                <span class="badge rounded-pill border fw-light badge-info">{% fill_status_invoice value|default_if_none:default_value %}</span>
+            {% elif value == 9 %}
+                <span class="badge rounded-pill border fw-light badge-success">{% fill_status_invoice value|default_if_none:default_value %}</span>
+            {% endif %}
+        {% elif fieldtype == 'status_process' %}
+            {% fill_status_process value|default_if_none:default_value %}
+        {% elif fieldtype == 'status_period' %}
+            {% if value == 0 %}
+                <span class="badge rounded-pill border fw-light badge-warning">{% fill_status_period value|default_if_none:default_value %}</span>
+            {% elif value == 9 %}
+                <span class="badge rounded-pill border fw-light badge-light">{% fill_status_period value|default_if_none:default_value %}</span>
+            {% elif not value %}
+                <span class="badge rounded-pill border fw-light badge-danger">{% fill_status_period value|default_if_none:default_value %}</span>
+            {% endif %}
+        {% elif fieldtype == 'status_email' %}
+            {% fill_status_email value|default_if_none:default_value %}
+        {% elif fieldtype == 'severity_choice' %}
+            {% fill_severity_choice value|default_if_none:default_value %}
+        {% elif fieldtype == 'idtype_choice' %}
+            {% fill_idtype_choice value|default_if_none:default_value %}
+        {% elif fieldtype == 'choice_day_month_once' %}
+            {% replace_choice_day_month_once value|default_if_none:default_value %}
+        {% elif fieldtype == 'boolean' %}
+            {% if value %}
+                {% boolean_icon value %}
+            {% else %}
+                {{ default_value }}
+            {% endif %}
+        {% elif fieldtype == 'boolean_true' %}
+            {% if value %}
+                {% boolean_icon_true value %}
+            {% else %}
+                {{ default_value }}
+            {% endif %}
+        {% elif fieldtype == 'editable_number' %}
+            <label for="{{ ctx.level }}_edit_{{ field }}_{{ record.id }}" class="d-none"></label>
+            <input
+                    id="{{ ctx.level }}_edit_{{ field }}_{{ record.id }}"
+                    inputmode="decimal"
+                    type="text"
+                    class="form-control editable"
+                    onclick="this.select()"
+                    onchange="save_value('{{ ctx.level }}_edit_{{ field }}_{{ record.id }}', '{{ ctx.level }}', '{{ ctx.package }}', '{{ ctx.fragment }}', '{{ field }}', '{{ record.id }}')"
+                    value="{{ value }}"
+            >
+        {% elif fieldtype == 'editable_date' %}
+            {% get_mindate_columnfield ctx.columnfields field as min %}
+            {% get_maxdate_columnfield ctx.columnfields field as max %}
+            <label for="{{ ctx.level }}_edit_{{ field }}_{{ record.id }}" class="d-none"></label>
+            <input
+                    id="{{ ctx.level }}_edit_{{ field }}_{{ record.id }}"
+                    type="date"
+                    min="{{ min|date:"Y-m-d" }}"
+                    max="{{ max|date:"Y-m-d" }}"
+                    class="form-control editable"
+                    onclick="this.select()"
+                    onchange="save_value('{{ ctx.level }}_edit_{{ field }}_{{ record.id }}', '{{ ctx.level }}', '{{ ctx.package }}', '{{ ctx.fragment }}', '{{ field }}', '{{ record.id }}')"
+                    value="{{ value|date:"Y-m-d" }}"
+            >
+        {% elif fieldtype == 'editable_dropdown' %}
+            {% get_choicelist_columnfield ctx.columnfields field as choicelist %}
+            <label for="{{ ctx.level }}_edit_{{ field }}_{{ record.id }}"></label>
+            <select
+                    id="{{ ctx.level }}_edit_{{ field }}_{{ record.id }}"
+                    class=" form-select editable"
+                    onchange="save_value('{{ ctx.level }}_edit_{{ field }}_{{ record.id }}', '{{ ctx.level }}', '{{ ctx.package }}', '{{ ctx.fragment }}', '{{ field }}', '{{ record.id }}')"
+            >
+                {% for listkey, listvalue in choicelist %}
+                    <option value="{{ listkey }}" {% if value == listkey %}selected{% endif %}>{{ listvalue }}</option>
+                {% endfor %}
+            </select>
+        {% elif fieldtype == 'listamount' %}
+            {% get_amount_from_list value as amount %}
+            {{ amount|default_if_none:'0' }}
+        {% elif fieldtype == 'fk' %}
+            {% get_fieldtype_columnfield ctx.columnfields field as fieldtype %}
+            {% get_fk_package_columnfield ctx.columnfields field as fk_package %}
+            {% get_fk_chapter_columnfield ctx.columnfields field as fk_chapter %}
+            {% get_linkdescription_columnfield ctx.columnfields field as linkdescription %}
+            <a href="{% url 'core:template' %}?level={{ ctx.level }}&package={{ fk_package }}&chapter={{ fk_chapter }}&pk={{ value }}">{{ linkdescription|default_if_none:default_value }}</a>
+        {% elif fieldtype == 'mollie_status' %}
+            {% if record.is_paid %}
+                <span class="badge rounded-pill border fw-light badge-success">Betaald</span>
+            {% else %}
+                {% if not value.status %}
+                    <span class="badge rounded-pill border fw-light badge-light">{% fill_status_mollie 'geen' %}</span>
+                {% elif value.status == 'open' %}
+                    <span class="badge rounded-pill border fw-light badge-warning">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% elif value.status == 'canceled' %}
+                    <span class="badge rounded-pill border fw-light badge-dark">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% elif value.status == 'pending' %}
+                    <span class="badge rounded-pill border fw-light badge-primary">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% elif value.status == 'authorized' %}
+                    <span class="badge rounded-pill border fw-light badge-primary">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% elif value.status == 'expired' %}
+                    <span class="badge rounded-pill border fw-light badge-warning">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% elif value.status == 'failed' %}
+                    <span class="badge rounded-pill border fw-light badge-danger">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% elif value.status == 'paid' %}
+                    <span class="badge rounded-pill border fw-light badge-success">{% fill_status_mollie value.status|default_if_none:default_value %}</span>
+                {% endif %}
+            {% endif %}
+        {% elif fieldtype == 'include' %}
+            {% get_templatename_columnfield ctx.columnfields field as templatename %}
+            {% include templatename %}
+        {% else %}
+            {{ value|default_if_none:default_value }}
+        {% endif %}
+    </div>
+</td>

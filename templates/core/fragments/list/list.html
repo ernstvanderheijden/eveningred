@@ -1,0 +1,36 @@
+{% if ctx.level > '0' %}
+    <div id="{{ ctx.level }}_{{ ctx.fragment }}" class="col-lg-{{ fragmentdata.width }}" data-refreshtarget-fragment="{{ ctx.level }}_{{ ctx.fragment }}">
+{% endif %}
+        <div class="container-fluid h-100 p-0 border bg-white rounded-6 shadow-sm">
+            <div class="row">
+                <div class="col">
+                    <nav class="navbar shadow-1 bg-light bg-gradient rounded-bottom rounded-6">
+                        <div class="col-auto me-auto ps-3">
+                            {% if ctx.level == '0' %}
+                                <h6 id="{{ ctx.level }}_title" class="mt-2">{{ ctx.contenttitle }}</h6>
+                            {% endif %}
+                        </div>
+                        <div class="col-auto">
+                            <span id="{{ ctx.level }}_{{ ctx.fragment }}_id_number_selected_rows" class="badge rounded-pill badge-info"></span>
+                        </div>
+                        <div class="col-auto pe-3">
+                            {% include 'core/tools/tools.html' %}
+                        </div>
+                    </nav>
+
+                    <div class="p-3 table_wrapper overflow-auto">
+                        <table class="table table-hover bg-white align-middle mt-1">
+                            {{ ctx.list_inner_html }}
+                        </table>
+                    </div>
+                    <div id="{{ ctx.level }}_pagination_{{ ctx.fragment }}" class="content_footer ps-3">
+                        {% if ctx.paginate %}
+                            {{ ctx.list_pagination_html }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% if ctx.level > '0' %}
+    </div>
+{% endif %}

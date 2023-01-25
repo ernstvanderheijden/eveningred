@@ -1,0 +1,59 @@
+<table class="w-100">
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_street" class="form-label" style="display: none" for="{{ form.street.id_for_label }}">Straat</label></td>
+        <td id="td_street" style="display: none">{{ form.street }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_postalcode" class="form-label" for="{{ form.postalcode.id_for_label }}">Postcode</label></td>
+        <td id="td_postalcode" style="display: block" onchange="clearhousenr()">{{ form.postalcode }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_number" class="form-label" for="{{ form.number.id_for_label }}">Huisnummer</label></td>
+        <td id="td_number" onchange="filladdress()">{{ form.number }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_suffix" class="form-label" for="{{ form.suffix.id_for_label }}">Toevoeging:</label></td>
+        <td id="td_suffix" onchange="filladdress()">{{ form.suffix }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_city" class="form-label" style="display: none" for="{{ form.city.id_for_label }}">Plaats</label></td>
+        <td id="td_city" style="display: none">{{ form.city }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_latitude" class="form-label" style="display: none" for="{{ form.latitude.id_for_label }}">Latitude</label></td>
+        <td id="td_latitude" style="display: none">{{ form.latitude|default_if_none:"" }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.subject.errors }}<label id="label_longitude" class="form-label" style="display: none" for="{{ form.longitude.id_for_label }}">Longitude</label></td>
+        <td id="td_longitude" style="display: none">{{ form.longitude|default_if_none:"" }}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <div id="div_address" class="alert alert-info">
+                <table class="fs-8 w-100">
+                    <tr>
+                        <td id="da_1">{{ form.street.value|default_if_none:"" }}
+                            {% if form.number.value %}{{ form.number.value|default_if_none:"" }}{% endif %}{% if form.suffix.value %}{{ form.suffix.value|default_if_none:"" }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td id="da_2">{{ form.postalcode.value|default_if_none:"" }}</td>
+                    </tr>
+                    <tr>
+                        <td id="da_3">{{ form.city.value|default_if_none:"" }}</td>
+                    </tr>
+                    <tr>
+                        <td id="da_6">{% if form.latitude.value %}Latitude: {{ form.latitude.value|default_if_none:"" }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td id="da_7">{% if form.longitude.value %}Longitude: {{ form.longitude.value|default_if_none:"" }}{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><i class="me-1 fw-light fs-8">Andere invoer</i></td>
+        <td><i class="fas fa-exchange-alt text-primary cursor-pointer" onclick="addressVisible()"></i></td>
+    </tr>
+</table>

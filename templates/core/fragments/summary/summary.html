@@ -1,0 +1,25 @@
+{% if ctx.level > '0' %}
+    <div id="{{ ctx.level }}_{{ ctx.fragment }}" class="col-lg-{{ fragmentdata.width }}" data-refreshtarget-fragment="{{ ctx.level }}_{{ ctx.fragment }}">
+{% endif %}
+<div class="container-fluid h-100 p-0 border bg-white rounded-6{% if not ctx.disabled %} shadow-sm{% endif %}">
+    <div class="row">
+        <div class="col">
+            <nav class="navbar shadow-1 bg-light bg-gradient rounded-bottom rounded-6">
+                <div class="col-auto me-auto ps-3">
+                    {% if ctx.level == '0' %}
+                        <h6 id="{{ ctx.level }}_title" class="mt-2">{{ ctx.contenttitle }}</h6>
+                    {% endif %}
+                </div>
+                <div class="col-auto">
+                    {% include 'core/tools/tools.html' %}
+                </div>
+            </nav>
+            <div id="{{ ctx.level }}_summary_{{ ctx.fragment }}" class="overflow-auto">
+                {% include ctx.render_templates.summary_inner_html %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if ctx.level > '0' %}
+    </div>
+{% endif %}

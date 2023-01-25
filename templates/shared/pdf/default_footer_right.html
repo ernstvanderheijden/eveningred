@@ -1,0 +1,14 @@
+{# paginering aantal pagina's werkt niet in pikepdf >= 6.0 #}
+{# denk aan spatie achter pagenumber tag anders print het paginanummer niet #}
+
+{#<div class="footerblock">#}
+{#    Pagina#}
+{#    <pdf:pagenumber/>#}
+{#    van#}
+{#    <pdf:pagecount/>#}
+{#</div>#}
+
+
+<div class="footerblock-right">
+    Pagina <pdf:pagenumber/>
+</div>

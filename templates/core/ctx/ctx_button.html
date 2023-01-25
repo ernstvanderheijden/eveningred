@@ -1,0 +1,12 @@
+{% if show_ctx %}
+    <div class="ms-2">
+        <a id="{{ ctx.level }}_ctx_{{ ctx.fragment }}"
+           role="button"
+           class="btn btn-sm btn-outline-light"
+           data-mdb-ripple-color="dark"
+           onclick="show_ctx('{{ ctx.level }}', '/core/showctx/?level={{ ctx.level }}', '{{ ctx.slug }}')"
+        >
+            <i class="fas fa-bug fs-10 text-black-50"></i>
+        </a>
+    </div>
+{% endif %}

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-sm bg-light navbar-light shadow-1 mt-3 ms-3 me-3 rounded-6">
+    <div class="container-fluid ps-2 pe-2">
+
+        <div class="{% if ctx.contenttitle %}badge badge-primary border me-4 shadow-sm{% endif %}">
+            <h6 id="{{ ctx.level }}_chaptertitle" class="m-0">{{ ctx.contenttitle }}</h6>
+        </div>
+
+        {% if ctx.chapterheader %}
+            <div id="chapterheader" class="badge badge-primary border me-4 shadow-sm">
+                <h6 class="m-0">{{ ctx.chapterheader }}</h6>
+            </div>
+        {% endif %}
+
+
+        {% include 'core/chaptermenu/chaptermenu.html' %}
+
+        {% include 'core/tools/tools.html' %}
+    </div>
+</nav>
+
+
+<div id="{{ ctx.level }}_fragments" class="container-fluid fragments-wrapper p-3">
+    <div class="row g-4">
+        {% for fragment in ctx.fragments %}
+            {% for fragment, fragmentdata in fragment.items %}
+                <div id="{{ ctx.level }}_{{ fragment }}" class="col-lg-{{ fragmentdata.width }}" data-refreshtarget-fragment="{{ ctx.level }}_{{ fragment }}">
+                    {{ fragmentdata.rendered_string }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>

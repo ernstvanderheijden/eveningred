@@ -1,0 +1,7 @@
+{% if request.user.is_authenticated %}
+    <div>
+        {% for menuitems in ctx.leftbottommenu %}
+            {% include 'core/menu/menu_worker.html' %}
+        {% endfor %}
+    </div>
+{% endif %}

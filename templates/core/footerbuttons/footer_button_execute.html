@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row justify-content-end">
+        <div class="col-auto ms-2 p-0">
+            <button type="button" id="{{ ctx.level }}_id_run_action" onclick="do_list_action('{{ ctx.fragment }}', {{ ctx.level }}, '{{ ctx.selectactionurl|replace_level_higher:ctx.level }}' +
+                    '&do=true' +
+                    '&list_action={{ ctx.list_action }}' +
+                    '&list_selected_records={{ ctx.list_selected_records }}' +
+                    '&fragment={{ ctx.fragment }}' +
+                    '&package={{ ctx.package }}' +
+                    '&pk={{ ctx.pk }}' +
+                    '&successurl={{ ctx.successurl }}', true)"
+                    class="btn btn-sm btn-outline-primary"
+                    style="margin: 2px 0 2px 0; padding: 0 5px 0 5px; height: 27px; min-width: 50px">Uitvoeren
+            </button>
+        </div>
+    </div>
+</div>

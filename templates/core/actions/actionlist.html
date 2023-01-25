@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="row">
+        {% if ctx.clickevent == 'selectmultiple' %}
+            <div class="col-auto">
+                <select
+                        id="{{ ctx.level }}_id_select_action"
+                        class="select"
+                        {#                            onchange="select_or_deselect_a_row({{ ctx.level }})" #}
+                        onchange="do_list_action('{{ ctx.fragment }}', {{ ctx.level }}, '{{ ctx.selectactionurl|replace_level_higher:ctx.level }}' +
+                                '&do=false' +
+                                '&list_action={{ ctx.list_action }}' +
+                                '&list_selected_records={{ ctx.list_selected_records }}' +
+                                '&fragment={{ ctx.fragment }}' +
+                                '&package={{ ctx.package }}' +
+                                '&pk={{ ctx.pk }}' +
+                                '&successurl={{ ctx.successurl }}', true)"
+                >
+                    <option value="" selected>---</option>
+                    {% for selectactions_key, selectactions_data  in ctx.selectactions.items %}
+                        <option value="{{ selectactions_data.action }}">{{ selectactions_data.description }}</option>
+                    {% endfor %}
+                    <label for="{{ ctx.level }}_id_select_action">Actie</label>
+                </select>
+            </div>
+            <div class="col-auto">
+                <span id="{{ ctx.level }}_{{ ctx.fragment }}_id_number_selected_rows"></span>
+            </div>
+        {% endif %}
+    </div>
+</div>
+

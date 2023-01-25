@@ -1,0 +1,22 @@
+{% load crispy_forms_field %}
+
+{% create_fieldid_from_fieldname field.name as fieldid %}
+
+<div class="form-group pb-3">
+    {% get_data_attrs field.field.widget.attrs as attrs %}
+    <div class="ajax-datepicker" data-mdb-toggle-button="false" {{ attrs }}>
+        <label for="{{ fieldid }}" class="form-label">{{ field.label }}
+            {% if field.field.required %}
+                <span class="asteriskField">*</span>
+            {% endif %}
+        </label>
+        {% if form_show_errors and field.errors %}
+            {% crispy_field field 'type' 'text' 'class' 'form-control cursor-pointer is-invalid' 'id' fieldid 'data-mdb-toggle' 'datepicker' %}
+            {% for error in field.errors %}
+                <p id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="invalid-feedback"><strong>{{ error }}</strong></p><br>
+            {% endfor %}
+        {% else %}
+            {% crispy_field field 'type' 'text' 'class' 'form-control cursor-pointer' 'id' fieldid 'data-mdb-toggle' 'datepicker' %}
+        {% endif %}
+    </div>
+</div>

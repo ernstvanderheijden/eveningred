@@ -1,0 +1,16 @@
+<div class="p-4">
+    <table class="table table-sm{% if ctx.disabled %} text-dark text-opacity-25{% endif %}">
+        <tbody>
+        {% for field, value in record.items %}
+            <tr>
+                {% if field in ctx.columnfields %}
+                    {% get_fieldtype_columnfield ctx.columnfields field as fieldtype %}
+                    {% get_fieldcaption_columnfield ctx.columnfields field as fieldcaption %}
+                    {% if fieldcaption %}<th scope="row">{{ fieldcaption }}</th>{% endif %}
+                    {% include 'core/fragments/td.html' %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

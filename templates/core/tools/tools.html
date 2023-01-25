@@ -1,0 +1,113 @@
+<div id="{{ ctx.level }}_tools_{% if ctx.fragment %}{{ ctx.fragment }}{% else %}{{ ctx.chapter }}{% endif %}" aria-label="Tools">
+    <div class="d-flex justify-content-end align-items-center">
+        {% include 'core/ctx/ctx_button.html' %}
+        {% if ctx.rights.write %}
+            {% if ctx.tools %}
+                {% for tool, tooldata in ctx.tools.items %}
+                    {% if tooldata.tooltype == 'pill' %}
+                        <div class="ms-2">
+                            <span class="badge rounded-pill border ps-2 pe-2 pt-1 pb-1 shadow-sm fw-light {{ tooldata.class }}">{{ tooldata.title }}</span>
+                        </div>
+
+                    {% elif tooldata.tooltype == 'popover' %}
+                        <div class="ms-2 mt-1">
+                            {% if tooldata.content %}
+                                <i class="{{ tooldata.class }} d-inline-block cursor-pointer"
+                                   data-mdb-toggle="popover"
+                                   data-mdb-trigger="hover focus"
+                                   data-mdb-html="true"
+                                   data-mdb-placement="bottom"
+                                   data-mdb-title="{{ tooldata.title }}"
+                                   data-mdb-content="{{ tooldata.content|linebreaks }}"
+                                   onclick="do_url('{{ ctx.fragment }}', '{{ ctx.level|level_higher }}','{{ tooldata.url }}')"
+                                ></i>
+                            {% else %}
+                                <i class="{{ tooldata.class }} text-black-25 cursor-pointer"
+                                   onclick="do_url('{{ ctx.fragment }}', '{{ ctx.level|level_higher }}','{{ tooldata.url }}')"
+                                >
+                                </i>
+                            {% endif %}
+                        </div>
+
+                    {% elif tooldata.tooltype == 'button' %}
+                        <div class="ms-2">
+                            <span class="{% if 'disabled_explanation' in tooldata %}d-inline-block{% endif %}"
+                                    {% if tooldata.disabled and tooldata.disabled_explanation %}
+                                  data-mdb-toggle="popover"
+                                  data-mdb-trigger="hover focus"
+                                  data-mdb-placement="bottom"
+                                  data-mdb-content="{{ tooldata.disabled_explanation }}"
+                                    {% endif %}
+                            >
+                                <button role="button"
+                                        id="{{ tooldata.id }}"
+                                        class="{{ tooldata.class }} btn-sm text-white"
+                                        data-mdb-ripple-color="dark"
+                                        onclick="do_url('{{ ctx.fragment }}', '{{ ctx.level|level_higher }}','{{ tooldata.url }}')"
+                                        {% if tooldata.disabled %}disabled{% endif %}
+                                >
+                                    {{ tooldata.title }}
+                                </button>
+                            </span>
+                        </div>
+
+                    {% elif tooldata.tooltype == 'href' %}
+                        <div class="ms-2">
+                            <button role="button"
+                                    id="{{ tooldata.id }}"
+                                    class="{{ tooldata.class }} btn-sm"
+                                    data-mdb-ripple-color="dark"
+                                    onclick="window.open('{{ tooldata.url }}', '{{ tooldata.target }}')"
+                            >
+                                <i class="{{ tooldata.title }}"></i>
+                            </button>
+                        </div>
+
+                    {% elif tooldata.tooltype == 'delete' and ctx.deny_del_or_upd %}  {# Disabled button delete with popover #}
+                        <div class="ms-2">
+                            <span class="d-inline-block"
+                                  data-mdb-toggle="popover"
+                                  data-mdb-trigger="hover focus"
+                                  data-mdb-placement="bottom"
+                                  data-mdb-content="Verwijderen niet mogelijk"
+                            >
+                                <button role="button"
+                                        id="{{ tooldata.id }}"
+                                        class="btn btn-sm btn-dark"
+                                        onclick=""
+                                        disabled
+                                >
+                                    <i class="{{ tooldata.title }} text-white"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                    {% else %}
+                        <div class="ms-2">
+                            <span class="{% if 'disabled_explanation' in tooldata %}d-inline-block{% endif %}"
+                                    {% if tooldata.disabled and tooldata.disabled_explanation %}
+                                  data-mdb-toggle="popover"
+                                  data-mdb-trigger="hover focus"
+                                  data-mdb-placement="bottom"
+                                  data-mdb-content="{{ tooldata.disabled_explanation }}"
+                                    {% endif %}
+                            >
+                                <button role="button"
+                                        id="{{ tooldata.id }}"
+                                        class="{{ tooldata.class }} btn-sm"
+                                        data-mdb-ripple-color="dark"
+                                        onclick="do_url('{{ ctx.fragment }}', '{{ ctx.level|level_higher }}','{{ tooldata.url }}')"
+                                        {% if tooldata.disabled %}
+                                        disabled
+                                        {% endif %}
+                                >
+                                    <i class="{{ tooldata.title }} text-white"></i>
+                                </button>
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

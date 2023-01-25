@@ -1,0 +1,12 @@
+<button
+        id="{{ ctx.level }}_deletebuttonlevel"
+        class="btn btn-sm btn-outline-primary"
+        type="button"
+        {% if record.latitude %}
+            onclick="window.open('https://google.com/maps/?q={{ record.latitude }},{{ record.longitude }}')"
+        {% else %}
+            disabled
+        {% endif %}
+>
+    Bekijk op de kaart
+</button>

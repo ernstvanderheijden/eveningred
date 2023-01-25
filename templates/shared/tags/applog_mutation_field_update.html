@@ -1,0 +1,14 @@
+<tr>
+    <td class="p-1 text-nowrap">
+        {{ applog.created|date:'d-m-Y H:i' }}
+    </td>
+    {% for msg, data in applog.message.items %}
+        <td class="p-1 text-nowrap">
+            Wijziging
+        </td>
+        <td class="p-1">
+        {{ data.description }}<br>
+            Was: {{ data.old_value }}, Is nu: {{ data.new_value }}
+        </td>
+    {% endfor %}
+</tr>

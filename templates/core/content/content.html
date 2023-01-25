@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header>
+        {% include 'core/menu/leftmenu.html' %}
+        {% include 'core/menu/topmenu.html' %}
+    </header>
+
+    <main id="private_main">
+        <input id="activelevel" type="hidden" value="0">
+        <div id="private_body" class="container-fluid p-0 m-0 rounded-6">
+            <div id="0_content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col p-0">
+                            <div id="chapter0">
+                                {% include 'core/chapter/chapter.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

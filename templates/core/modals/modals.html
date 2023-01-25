@@ -1,0 +1,92 @@
+{% include 'core/modals/modal1.html' %}
+{% include 'core/modals/modal2.html' %}
+{% include 'core/modals/modal3.html' %}
+{% include 'core/modals/modal4.html' %}
+{% include 'core/modals/modal5.html' %}
+{% include 'core/modals/modal6.html' %}
+
+<script>
+    var modal1 = document.getElementById('1_modal');
+    var modal2 = document.getElementById('2_modal');
+    var modal3 = document.getElementById('3_modal');
+    var modal4 = document.getElementById('4_modal');
+    var modal5 = document.getElementById('5_modal');
+    var modal6 = document.getElementById('6_modal');
+    var qsel = '';
+
+    function arrange_modal_at_shown(fragment, level) {  // Todo queryselector niet nodig, weghalen en huidige level de focus gevem
+        // set_suneditor()
+        {#qsel = document.querySelectorAll('#' + level.toString() + '_modal'  + 'body .focus')#}
+        {#if (qsel.length) {#}
+        {#    qsel[0].focus()#}
+        {# }#}
+        // Set the focus to the field with the order_by
+
+        if (document.getElementById(level.toString() + '_filterfield_' + determine_order_by_variables(fragment, level)[1])) {
+            document.getElementById(level.toString() + '_filterfield_' + determine_order_by_variables(fragment, level)[1]).focus()
+        } else {
+            // In the queryselectorAll the ',' means 'OR' ' ' means 'AND'
+            const classFocus = document.querySelectorAll('[id="' + level.toString() + '_modal"] .focus');
+            classFocus.forEach((classFocus) => {
+                classFocus.focus()
+            })
+        }
+        set_active_level(level)
+    }
+
+    modal1.addEventListener('shown.bs.modal', function () {
+        arrange_modal_at_shown('1_modal', 1)
+    })
+    modal2.addEventListener('shown.bs.modal', function () {
+        arrange_modal_at_shown('2_modal', 2)
+    })
+    modal3.addEventListener('shown.bs.modal', function () {
+        arrange_modal_at_shown('3_modal', 3)
+    })
+    modal4.addEventListener('shown.bs.modal', function () {
+        arrange_modal_at_shown('4_modal', 4)
+    })
+    modal5.addEventListener('shown.bs.modal', function () {
+        arrange_modal_at_shown('5_modal', 5)
+    })
+    modal6.addEventListener('shown.bs.modal', function () {
+        arrange_modal_at_shown('6_modal', 6)
+    })
+
+    function arrange_modal_at_hidden(fragment, level) {
+        {#qsel = document.querySelectorAll('.modal' + (level - 1).toString() + 'body .focus')#}
+        qsel = document.querySelectorAll('.modal' + (level - 1).toString() + 'body')
+        if (qsel.length) {
+            qsel[0].focus()
+        }
+        // Set the focus to the field with the order_by in the lower level
+        if (document.getElementById((level - 1).toString() + '_filterfield_' + determine_order_by_variables(fragment, (level - 1))[1])) {
+            document.getElementById((level - 1).toString() + '_filterfield_' + determine_order_by_variables(fragment, (level - 1))[1]).focus()
+        }
+        document.getElementById(level.toString() + '_header').innerHTML = '';
+        document.getElementById(level.toString() + '_body').innerHTML = '';
+        document.getElementById(level.toString() + '_footer').innerHTML = '';
+
+        set_active_level(level - 1)
+    }
+
+    modal1.addEventListener('hidden.bs.modal', function () {
+        arrange_modal_at_hidden('1_modal', 1)
+    })
+    modal2.addEventListener('hidden.bs.modal', function () {
+        arrange_modal_at_hidden('2_modal', 2)
+    })
+    modal3.addEventListener('hidden.bs.modal', function () {
+        arrange_modal_at_hidden('3_modal', 3)
+    })
+    modal4.addEventListener('hidden.bs.modal', function () {
+        arrange_modal_at_hidden('4_modal', 4)
+    })
+    modal5.addEventListener('hidden.bs.modal', function () {
+        arrange_modal_at_hidden('5_modal', 5)
+    })
+    modal6.addEventListener('hidden.bs.modal', function () {
+        arrange_modal_at_hidden('6_modal', 6)
+    })
+
+</script>

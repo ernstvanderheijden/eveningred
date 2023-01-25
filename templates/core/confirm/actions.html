@@ -1,0 +1,21 @@
+{% include 'core/ctx/ctx_button.html' %}
+{% if ctx.actions %}
+    {% for action, actiondata in ctx.actions.items %}
+        {% if actiondata.type == 'confirm' %}
+            <div class="ms-2">
+                <button id="{{ ctx.level }}_id_run_action" type="button"
+                        onclick="set_element_disabled('{{ ctx.level }}_id_run_action');do_url('{{ ctx.fragment }}', '{{ ctx.level|level_higher }}','{{ actiondata.url }}')"
+                        class="{{ actiondata.class }}"
+                >
+                    {{ actiondata.caption }}
+                </button>
+            </div>
+        {% elif actiondata.type == 'cancel' %}
+            <button type="button" class="{{ actiondata.class }}" data-mdb-dismiss="modal" style="">
+                {{ actiondata.caption }}
+            </button>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+

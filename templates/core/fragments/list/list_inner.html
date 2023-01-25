@@ -1,0 +1,99 @@
+<thead>
+{# FilterRow chapter #}
+
+{% if not ctx.hide_filter %}
+    <tr role="row">
+        {# Selectable chapter #}
+        {% if ctx.status != 9 %}
+
+            {% if ctx.clickevent == 'selectmultiple' %}
+                <th></th>
+            {% endif %}
+        {% endif %}
+
+        {# Input filter chapter #}
+        {% for fieldname, fielddata in ctx.columnfields.items %}
+            <th>
+                {% if not fielddata.hide_fieldfilter %}
+                    <input
+                            {% if fielddata.fieldtype == "date" %}
+                                onfocus="(this.type='date')"
+                                onblur="(this.type='text')"
+                            {% else %}
+                                type="{{ fielddata.fieldtype }}"
+                            {% endif %}
+                                id="{{ ctx.level }}_filterfield_{{ fieldname }}"
+                                data-operator="{{ fielddata.operator }}"
+                                class="form-control filterfield text-black-50 fw-lighter lh-1"
+                                placeholder=" "
+                                onchange="refresh_content('{{ ctx.fragment }}', {{ ctx.level }}, '{% url "core:fragment" %}?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk={{ ctx.pk|default_if_none:'' }}&fk={{ ctx.fk|default_if_none:'' }}&refreshtarget=data&fragmentrefresh=data_{{ ctx.fragment }}&paginate={{ ctx.paginate }}&page=1')"
+                                onkeyup="refresh_content('{{ ctx.fragment }}', {{ ctx.level }}, '{% url "core:fragment" %}?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk={{ ctx.pk|default_if_none:'' }}&fk={{ ctx.fk|default_if_none:'' }}&refreshtarget=data&fragmentrefresh=data_{{ ctx.fragment }}&paginate={{ ctx.paginate }}&page=1')"
+                            {#                        onchange="refresh_content('{{ ctx.fragment }}', {{ ctx.level }}, '{% url "core:fragment" %}?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&paginate={{ ctx.paginate }}&page=1')"#}
+                                value="{{ ctx.filterfieldvalue|get_value_field_from_filterfieldvalue:fieldname }}"
+                    >
+                    <label for="{{ ctx.level }}_filterfield_{{ fieldname }}" class="d-none"></label>
+                    {#                    <button onclick="document.getElementById('{{ ctx.level }}_filterfield_{{ fieldname }}').value = ''">x</button>#}
+
+
+                {% endif %}
+            </th>
+        {% endfor %}
+
+        {# Action chapter #}
+        {% if ctx.actionbuttonhtml %}
+            <th></th>{% endif %}
+    </tr>
+{% endif %}
+
+{# Caption and Order_by Row chapter #}
+<tr role="row">
+
+    {# Selectable chapter #}
+    {% if ctx.clickevent == 'selectmultiple' %}
+        {% if ctx.status != 9 %}
+            <th>
+                <div class="form-check">
+                    <input
+                            type="checkbox"
+                            id="{{ ctx.level }}_{{ ctx.fragment }}_id_select_all_rows"
+                            class="form-check-input"
+                            value=""
+                            onchange="select_all_rows({{ ctx.level }}, '{{ ctx.fragment }}')">
+                    <label for="{{ ctx.level }}_{{ ctx.fragment }}_id_select_all_rows" class="form-check-label d-none"></label>
+                </div>
+            </th>
+        {% endif %}
+    {% endif %}
+
+    {# Ordering chapter #}
+    {% for fieldname, fielddata in ctx.columnfields.items %}
+        {% if not ctx.no_ordering %}
+            <th class="{% if fieldname == ctx.order_by %}sorting_desc{% elif fieldname in ctx.order_by %}sorting_asc{% else %}sorting{% endif %}"
+                id="{{ ctx.level }}_order_by_{{ fieldname }}"
+                onclick="do_refresh_fragment('{% if fieldname == ctx.order_by %}-{% endif %}{{ fieldname }}',
+                        '{{ ctx.fragment }}', {{ ctx.level }},
+                        '{% url 'core:fragment' %}?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk={{ ctx.pk|default_if_none:'' }}' +
+                        '&refreshtarget=data&fragmentrefresh=data_{{ ctx.fragment }}&paginate={{ ctx.paginate }}&page=1');"
+            >
+                {{ fielddata.caption }}
+            </th>
+        {% else %}
+            <th class="" id="{{ ctx.level }}_order_by_{{ fieldname }}" onclick="">{{ fielddata.caption }}</th>
+        {% endif %}
+    {% endfor %}
+
+    {# Action chapter #}
+    {% if ctx.actionbuttonhtml %}
+        <th>
+        </th>
+    {% endif %}
+
+    {# Updatable #}
+    {% if ctx.clickevent == 'update' %}
+    {% endif %}
+</tr>
+</thead>
+
+<tbody id="{{ ctx.level }}_data_{{ ctx.fragment }}" data-refreshtarget-data="{{ ctx.level }}_{{ ctx.fragment }}">
+{{ ctx.list_inner_data_html }}
+</tbody>

@@ -1,0 +1,54 @@
+{% load l10n %}
+{% for record in ctx.records %}
+
+    {# Row chapter #}
+    <tr class="{% if ctx.clickevent == 'selectmultiple' or ctx.clickevent == 'detail' %}cursor-pointer{% endif %}" id="{{ ctx.level }}_{{ ctx.fragment }}_tr{{ record.id }}"
+            {# Updatable chapter #}
+{#            {% if ctx.clickevent == 'detail' %}#}
+{#                onclick="{% replace_onclick_values ctx.onclick record ctx.displayfield %}"#}
+                onclick="{% if ctx.disable_onclick_after_click  %}disable_element_onclick('{{ ctx.level }}_{{ ctx.fragment }}_tr{{ record.id }}');{% endif %}{% replace_onclick_values ctx.onclick record ctx.displayfield %}"
+
+            {# Selectable chapter #}
+{#            {% elif ctx.clickevent == 'selectmultiple' and ctx.selectable_when|selectable_when:record %}#}
+{#            {% elif ctx.clickevent == 'selectmultiple' and record.status == 0 %}#}
+{#                onclick="check_if_check_is_checked({{ ctx.level }},'{{ ctx.fragment }}',{{ record.id }})"#}
+{#            {% endif %}#}
+    >
+
+        {# Selectable chapter #}
+        {% if ctx.clickevent == 'selectmultiple' %}
+            {% if ctx.status != 9 %}
+                <td onclick="event.stopPropagation()">
+                    {% if record.status == 0 %}
+                        <div class="form-check">
+                            <input
+                                    type="checkbox"
+                                    id="{{ ctx.level }}_{{ ctx.fragment }}_id_select_record{{ record.id }}"
+                                    class="{{ ctx.level }}_select_record form-check-input"
+                                    value="{{ record.id }}"
+                                    onclick="select_or_deselect_a_row({{ ctx.level }},'{{ ctx.fragment }}',{{ record.id }})"
+                                    tabindex="-1">
+                            <label for="{{ ctx.level }}_{{ ctx.fragment }}_id_select_record{{ record.id }}" class="form-check-label d-none"></label>
+                        </div>
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% endif %}
+
+        {# Fields chapter #}
+        {% for field, value in record.items %}
+            {% if field in ctx.columnfields %}
+                {% get_fieldtype_columnfield ctx.columnfields field as fieldtype %}
+                {% include 'core/fragments/td.html' %}
+            {% endif %}
+        {% endfor %}
+
+        {# Action chapter #}
+        {% if ctx.actionbuttonhtml %}
+            <td onclick="event.stopPropagation()">
+                {% include ctx.actionbuttonhtml %}
+            </td>
+        {% endif %}
+
+    </tr>
+{% endfor %}

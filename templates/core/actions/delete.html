@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <div class="row justify-content-end">
+        <div class="col-auto ms-2 p-0">
+            {% if ctx.deny_del_or_upd %}
+                <button id="{{ ctx.level }}_submitbuttonlevel" class="btn btn-danger" type="button" disabled>Verwijder</button>
+            {% else %}
+                <button id="{{ ctx.level }}_submitbuttonlevel" class="btn btn-danger" type="submit" form="form{{ ctx.level }}">Verwijder</button>
+            {% endif %}
+        </div>
+    </div>
+</div>

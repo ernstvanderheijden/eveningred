@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+<div id="{{ ctx.level }}_fragments" class="container-fluid fragments-wrapper p-3">
+    <div class="row g-4">
+        {% for fragment in ctx.fragments %}
+            {% for fragment, fragmentdata in fragment.items %}
+                <div id="{{ ctx.level }}_{{ fragment }}" class="col-lg-{{ fragmentdata.width }}" data-refreshtarget-fragment="{{ ctx.level }}_{{ fragment }}">
+                    {{ fragmentdata.rendered_string }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>

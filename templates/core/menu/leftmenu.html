@@ -1,0 +1,21 @@
+{% load static %}
+
+<nav id="sidenav-1"
+     class="sidenav bg-dark"
+     data-mdb-hidden="false"
+     data-mdb-accordion="true"
+     data-mdb-color="light"
+     data-mdb-mode="side"
+{#     data-mdb-scroll-container="#scrollContainer"#}
+        {#     data-mdb-width="240"#}
+>
+    <a class="d-flex justify-content-center py-4" href="/">
+        <img id="logo" src="{% static '/img/logo.png' %}" alt="Logo" draggable="false"/>
+    </a>
+
+    <hr class="mt-0"/>
+
+    {% if request.user.is_authenticated %}
+        {% include 'core/menu/lefttopmenu.html' %}
+    {% endif %}
+</nav>

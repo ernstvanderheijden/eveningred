@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row g-4">
+        <div class="col-12 p-0">
+            <label for="searchfield_ctx"></label><input id="searchfield_ctx" class="form-control focus" type="text" autofocus placeholder="Zoek..." onkeyup="search_ctx()">
+        </div>
+        <div class="col-12 p-2 border rounded">
+            <table class="table table-sm table-striped">
+                {% for c, cdata in ctx.ctxdata.items %}
+                    <tr>
+                        <th class="search_ctx" scope="row" style="min-width: 300px;">{{ c }}</th>
+                        <td class="search_ctx">{{ cdata }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>

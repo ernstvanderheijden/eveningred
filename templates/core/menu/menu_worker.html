@@ -1,0 +1,19 @@
+<ul class="sidenav-menu">
+    {% for menuitem, menudata in menuitems.items %}
+        <li class="sidenav-item{% if menuitem == ctx.leftmenuactive %} active{% endif %}" onclick="window.open('{{ menudata.url }}', '_parent')">
+            <a class="sidenav-link p-4">
+                <i class="{{ menudata.icon }} fs-5 me-2{% if menuitem == ctx.leftmenuactive %} text-success{% endif %}"></i>
+                <span class="p-2">{{ menuitem }}</span>
+            </a>
+            {% for submenu in menudata.submenu %}
+                <ul class="sidenav-collapse">
+                    {% for submenuitem, submenudata in submenu.items %}
+                        <li class="sidenav-item{% if submenuitem == ctx.leftsubmenuactive %} active{% endif %}" onclick="window.open('{{ submenudata.url }}', '_parent')">
+                            <a class="sidenav-link ms-2">{{ submenuitem }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </li>
+    {% endfor %}
+</ul>

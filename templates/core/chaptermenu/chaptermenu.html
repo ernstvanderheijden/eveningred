@@ -1,0 +1,67 @@
+{% if ctx.chaptermenu %}
+    <button class="navbar-toggler"
+            type="button"
+            aria-controls="chaptermenu"
+            aria-expanded="false"
+            aria-label="Chaptermenu"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#chaptermenu"
+    >
+        <i class="fas fa-bars"></i>
+    </button>
+{% endif %}
+<div id="chaptermenu" class="collapse navbar-collapse">
+    {% if ctx.chaptermenu %}
+        <div class="navbar-nav me-auto small">
+
+            <ul id=""
+                class="nav nav-pills"
+                role="tablist">
+
+                {% for data_chaptermenu in ctx.chaptermenu %}
+                    {% for name_chaptermenuitem, data_chaptermenuitem in data_chaptermenu.items %}
+                        {% if data_chaptermenuitem.chapterbuttontype == 'menuitem' %}
+                            <li class="m-1">
+                                <div class="dropdown-toggle">
+                                    <div class="btn-group btn-group-sm shadow-0" role="group">
+                                        <div id="dropdown_{{ name_chaptermenuitem }}"
+                                             role="button"
+                                             class="btn btn-chaptermenu shadow-0{% if ctx.chapter in data_chaptermenuitem.names_active_button %} active{% endif %}"
+                                             data-mdb-toggle="dropdown"
+                                             aria-expanded="false"
+                                        >
+                                            {{ name_chaptermenuitem }}
+                                        </div>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown_{{ name_chaptermenuitem }}">
+                                            {% for menuitem in data_chaptermenuitem.menuitems %}
+                                                <li class="small">
+                                                    <div class="dropdown-item p-3" onclick="window.open('{{ menuitem.chapterurl }}', '_parent')">{{ menuitem.caption }}</div>
+                                                </li>
+                                                <hr class="dropdown-divider"/>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                            </li>
+
+                        {% else %}
+                            <li class="m-1">
+                                <div id="{{ name_chaptermenuitem }}"
+                                     role="button"
+                                     class="btn btn-chaptermenu shadow-0 position-relative{% if ctx.chapter == data_chaptermenuitem.name_active_chapter %} active{% endif %}"
+                                     onclick="window.open('{{ data_chaptermenuitem.chapterurl }}', '_parent')"
+                                >
+                                    {{ name_chaptermenuitem }}
+                                    {% if data_chaptermenuitem.amount_warnings > 0 %}
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
+                                             {{ data_chaptermenuitem.amount_warnings }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
