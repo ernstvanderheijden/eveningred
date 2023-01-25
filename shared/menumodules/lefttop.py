@@ -18,6 +18,14 @@ def set_moduledata(request):
 
     if request.user.is_employee:
         moduledata.append({
+            "Projectbeheer": {
+                "url": "/core/template/?level=0&package=projects&chapter=list",
+                "icon": "bi bi-hammer",
+            },
+        })
+
+    if request.user.is_employee:
+        moduledata.append({
             "Artikelbeheer": {
                 "url": "/core/template/?level=0&package=articles&chapter=list",
                 "icon": "bi bi-cart2",

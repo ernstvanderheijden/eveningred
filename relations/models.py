@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from core.check_deny_delete_or_update import check_deny_del_or_upd
 from django.db import models
 from localflavor.generic.models import IBANField, BICField
-from shared.functions import get_fulladdress
 
 
 class Relation(models.Model):
@@ -72,7 +71,6 @@ class Relation(models.Model):
         #             })
 
     def save(self, *args, **kwargs):
-        self.fulladdress = get_fulladdress(self.street, self.number, self.suffix, self.postalcode, self.city)
         if self.licenseplate:
             self.licenseplate = self.licenseplate.upper()
         super(Relation, self).save(*args, **kwargs)

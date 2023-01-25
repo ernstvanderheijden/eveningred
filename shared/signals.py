@@ -10,7 +10,9 @@ from master.models import \
     Paymenttype, \
     Unittype, \
     Vattype
+from projects.models import Project
 from relations.models import Relation
+from shared.functions import update_address, get_fulladdress
 from users.models import User
 
 
@@ -61,10 +63,19 @@ def save_cre_and_upd_paymenttype(sender, instance, **kwargs):
     update_instance(instance)
 
 
+# Project
+@receiver(pre_save, sender=Project)
+def save_cre_and_upd_projcet(sender, instance, **kwargs):
+    update_instance(instance)
+    update_address(instance)
+    get_fulladdress(instance.street, instance.number, instance.suffix, instance.postalcode, instance.city)
+
+
 # Relation
 @receiver(pre_save, sender=Relation)
 def save_cre_and_upd_relation(sender, instance, **kwargs):
     update_instance(instance)
+    get_fulladdress(instance.street, instance.number, instance.suffix, instance.postalcode, instance.city)
 
 
 # Unittype

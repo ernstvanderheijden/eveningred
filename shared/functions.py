@@ -1,4 +1,5 @@
 from master.models import Vattype
+from relations.models import Relation
 
 
 def nonetozero(value):
@@ -163,3 +164,16 @@ def fill_data_with_print_records(data, response):
     data['print_type'] = 'invoices'
     data['form_is_valid'] = True
     data['messagelist'] = ["Items verzonden, " + str(len(response)) + " items te printen", "success", "long"]
+
+
+def update_address(instance):
+    relation = Relation.objects.get(id=instance.relationid_id)
+    if not instance.street and not instance.city and relation.street and relation.city:
+        instance.street = relation.street
+        instance.number = relation.number
+        instance.suffix = relation.suffix
+        instance.postalcode = relation.postalcode
+        instance.city = relation.city
+        instance.latitude = relation.latitude
+        instance.longitude = relation.longitude
+    return instance

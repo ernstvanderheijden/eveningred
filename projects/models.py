@@ -9,6 +9,7 @@ class Project(models.Model):
         (-1, 'Inactief'),
     )
     description = models.CharField(blank=True, null=True, max_length=100)
+    startdate = models.DateField(blank=True, null=True)
     relationid = models.ForeignKey('relations.Relation', null=True, blank=True, on_delete=models.PROTECT, related_name='relationid_project')
     street = models.CharField(max_length=50, default="", null=True, blank=True)
     number = models.CharField(max_length=6, default="", null=True, blank=True)
