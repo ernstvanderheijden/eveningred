@@ -12,19 +12,11 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
         self.firstname = {
             "class": "",
             "label": "Voornaam",
-            "required": True,
         }
         self.lastname = {
             "class": "",
             "label": "Achternaam",
-            "required": True,
-        }
-        self.dateofbirth = {
-            "label": "Geboortedatum",
-            "datepicker": True,
-        }
-        self.placeofbirth = {
-            "label": "Geboorteplaats",
+            # "required": True,
         }
         self.include = {
             "templatename": "core/actions/postcodenl.html",
@@ -63,37 +55,45 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
         self.email = {
             "label": "E-mail",
         }
-        self.is_debtor = {
-            "label": "Debiteur",
-        }
-        self.is_creditor = {
-            "label": "Crediteur",
-        }
-        self.debtornr = {
-            "label": "Debiteurnummer",
-        }
-        self.creditornr = {
-            "label": "Crediteurnummer",
-        }
-        self.cocnr = {
-            "label": "KvK nummer",
-        }
-        self.vatnr = {
-            "label": "BTW nummer",
-        }
-        self.licenseplate = {
-            "label": "Kenteken",
-        }
+        # self.is_debtor = {
+        #     "label": "Debiteur",
+        # }
+        # self.is_creditor = {
+        #     "label": "Crediteur",
+        # }
+        # self.debtornr = {
+        #     "label": "Debiteurnummer",
+        # }
+        # self.creditornr = {
+        #     "label": "Crediteurnummer",
+        # }
+        # self.cocnr = {
+        #     "label": "KvK nummer",
+        # }
+        # self.vatnr = {
+        #     "label": "BTW nummer",
+        # }
+        # self.dateofbirth = {
+        #     "label": "Geboortedatum",
+        #     "datepicker": True,
+        # }
+        # self.placeofbirth = {
+        #     "label": "Geboorteplaats",
+        # }
+        # self.licenseplate = {
+        #     "label": "Kenteken",
+        # }
         self.conditiontypeid = {
             "label": "Betalingstermijn",
-            "required": True,
+            # "required": True,
         }
         self.paymenttypeid = {
             "label": "Betaalwijze",
-            "required": True,
+            # "required": True,
         }
         self.sendmethod = {
             "label": "Verzendmethode",
+            # See model Relation for e-mailaddress required. Is now grayed out
         }
         self.status = {
             "label": "Status",

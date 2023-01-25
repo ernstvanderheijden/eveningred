@@ -15,7 +15,7 @@ class Relation(models.Model):
         (1, 'E-mail'),
         (2, 'Print'),
     )
-    relationname = models.CharField(blank=False, null=False, max_length=50)
+    relationname = models.CharField(blank=True, null=True, max_length=50)
     firstname = models.CharField(blank=True, null=True, max_length=50)
     lastname = models.CharField(blank=True, null=True, max_length=50)
     dateofbirth = models.DateField(blank=True, null=True)
@@ -42,7 +42,7 @@ class Relation(models.Model):
     licenseplate = models.CharField(max_length=15, default="", null=True, blank=True)
     conditiontypeid = models.ForeignKey('master.Conditiontype', null=True, blank=True, on_delete=models.PROTECT, related_name='conditiontypeid_relation')
     paymenttypeid = models.ForeignKey('master.Paymenttype', null=True, blank=True, on_delete=models.PROTECT, related_name='paymenttypeid_relation')
-    sendmethod = models.IntegerField(choices=SENDMETHOD_CHOICES, null=False, blank=False)
+    sendmethod = models.IntegerField(choices=SENDMETHOD_CHOICES, default=1, null=False, blank=False)
     status = models.IntegerField(default=0, choices=STATUS_CHOICES, null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -53,16 +53,23 @@ class Relation(models.Model):
         ordering = ["relationname"]
 
     def __str__(self):
-        return self.relationname
+        if self.relationname:
+            return self.relationname
+        else:
+            return self.lastname
 
     def clean(self):
         super().clean()
-        match self.sendmethod:
-            case 1:
-                if self.email is None:
-                    raise ValidationError({
-                        'sendmethod': ValidationError("Bij verzendmethode 'e-mail' is een e-mailadres verplicht.")
-                    })
+        if self.relationname is None and self.lastname is None:
+            raise ValidationError({
+                'relationname': ValidationError("Of `Relatienaam` of `Achternaam `invullen.")
+            })
+        # match self.sendmethod:
+        #     case 1:
+        #         if self.email is None:
+        #             raise ValidationError({
+        #                 'sendmethod': ValidationError("Bij verzendmethode 'e-mail' is een e-mailadres verplicht.")
+        #             })
 
     def save(self, *args, **kwargs):
         self.fulladdress = get_fulladdress(self.street, self.number, self.suffix, self.postalcode, self.city)
