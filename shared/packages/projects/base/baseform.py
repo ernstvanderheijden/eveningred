@@ -13,6 +13,7 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
             "label": "Relatie",
         }
         self.startdate = {
+            "datepicker": True,
             "label": "Startdatum",
         }
         self.include = {
