@@ -1,4 +1,5 @@
 from core.functions.render_fragments import fragmentdatabuilder, confirmdatabuilder
+from core.globals.global_access import UserAccessMixin
 from core.globals.global_functions import decode_string
 from core.globals.global_private_views import GlobalPrivateTemplate, GlobalPrivateCreate, GlobalPrivateUpdate, GlobalPrivateDelete
 from django.contrib.auth.decorators import user_passes_test
@@ -7,7 +8,7 @@ from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_protect
 
 
-class Template(GlobalPrivateTemplate):
+class Template(UserAccessMixin, GlobalPrivateTemplate):
     pass
 
 
@@ -23,15 +24,15 @@ def confirm(request):
     return JsonResponse(data)
 
 
-class Create(GlobalPrivateCreate):
+class Create(UserAccessMixin, GlobalPrivateCreate):
     pass
 
 
-class Update(GlobalPrivateUpdate):
+class Update(UserAccessMixin, GlobalPrivateUpdate):
     pass
 
 
-class Delete(GlobalPrivateDelete):
+class Delete(UserAccessMixin, GlobalPrivateDelete):
     pass
 
 
