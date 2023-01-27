@@ -124,11 +124,11 @@ def prepare_message(request, ctx, data, messages):
 def set_url(request):
     url_path = request.path
     url_get = ''
-    for rg, data in request.GET.items():
+    for key, value in request.GET.items():
         if url_get:
-            url_get = url_get + "&" + rg + "=" + data
+            url_get = url_get + "&" + key + "=" + value
         else:
-            url_get = "?" + rg + "=" + data
+            url_get = "?" + key + "=" + value
     url = url_path + url_get
     return url
 
