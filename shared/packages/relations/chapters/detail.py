@@ -21,7 +21,6 @@ class Detail(Basechapter):
         self.pk = pk
         self.viewtype = viewtype
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_employee_read", "write": "is_employee_write"}, {"read": "is_manager", "write": "is_manager"}]
 
         self.tools = {
             "update": {

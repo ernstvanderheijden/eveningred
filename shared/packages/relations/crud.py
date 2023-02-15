@@ -16,7 +16,6 @@ class Crud:
         self.record = ''
         if pk:
             self.record = Relation.objects.get(id=pk)
-        self.rights_crud = [{"read": "is_employee_read", "write": "is_employee_write"}, {"read": "is_manager", "write": "is_manager"}]
         self.order_by = "relationname"
         self.successurl = request.GET.get('successurl', '')
         self.templatename = 'core/forms/form.html'

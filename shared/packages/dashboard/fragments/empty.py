@@ -10,7 +10,6 @@ class Empty(Basepackage, GlobalSummary):
         self.pk = pk
         self.contenttitle = "Hier kunnen widgets, statistieken en actielijsten komen"
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         # self.fragmenttype = "summary"
         self.render_templates = {
             "refreshtarget": "fragment",

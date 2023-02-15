@@ -12,7 +12,6 @@ class BaseSelectList(GlobalList):
         self.paginatesize_overwrite = ''
         self.displayfield = 'relationname'
         self.disable_onclick_after_click = True
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.columnfields = {  # Fieldtypes are: boolean, boolean_true, char, date, email, number, decimal, phone, sex, textarea, textarea_html, pill_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
             "relationname": {
                 "caption": "Relatienaam",

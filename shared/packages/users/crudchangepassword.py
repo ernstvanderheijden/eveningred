@@ -15,7 +15,6 @@ class Crudchangepassword:
         self.modelname = modelname
         self.record = ''
         self.record = User.objects.get(id=pk)
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.order_by = "first_name"
         self.successurl = request.GET.get('successurl', '')
         self.templatename = 'core/forms/form.html'

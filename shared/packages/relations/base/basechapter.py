@@ -7,7 +7,6 @@ class Basechapter(Basepackage):
         super().__init__()
         self.leftmenuactive = "Relatiebeheer"
         # self.leftsubmenuactive = "Relaties"
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.deny_del_or_upd = Relation.dependencies(pk)
 
         if pk:

@@ -7,7 +7,6 @@ class Basechapter(Basepackage):
         super().__init__()
         self.leftmenuactive = "Logboek"
         # self.leftsubmenuactive = "Applog"
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.deny_del_or_upd = Applog.dependencies(pk)
 
         if pk:

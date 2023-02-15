@@ -23,7 +23,6 @@ class Detail(Basechapter):
         if request.GET.get('pk', ''):
             self.pk = request.GET.get('pk')
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
 
         self.tools = dict()
         self.record = Configuration.objects.get(id=self.pk)

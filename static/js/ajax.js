@@ -29,63 +29,61 @@ function do_url(fragment, level, url) {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         data: {},
         success: function (data) {
-            if (!redirect_no_rights(data)) {
-                var load_template = get_load_template(data)
-                if (load_template && data.form_is_valid) {
-                    window.open(data.successurl, '_parent');
-                } else if (data.form_is_valid) {
-                    var targetfragment = data.fragment
-                    if (data.level > 0) {
-                        targetfragment = 'body'
-                    }
-                    if (data.html_header && data.level > 0) {
-                        document.getElementById(data.level.toString() + "_header").innerHTML = data.html_header;
-                    }
-                    if (data.html_body) {
-                        document.getElementById(data.level.toString() + "_" + targetfragment).innerHTML = data.html_body;
-                    }
-                    if (data.html_footer && data.level > 0) {
-                        document.getElementById(data.level.toString() + "_footer").innerHTML = data.html_footer;
-                    }
-                    if (data.level > 0) {
-                        set_classes_jqdialog(data) // Herewith we set the classes for the modal.dialog div
-                        var modallevel = $("#" + data.level.toString() + "_modal")
-                        if (modallevel.length > 0) {
-                            modallevel.modal('show');
-                        }
-                    } else {
-                        if (!data.donotclose) {
-                            var modal1 = $('#1_modal')
-                            if (modal1.is(":visible")) {
-                                modal1.modal('hide');
-                                $('#1_body').innerHTML = ''
-                            }
-                        }
-                    }
-                    if (data.messagelist) {
-                        if (data.messagelist[2]) {
-                            handle_messagelist(data.messagelist)
-                        }
-                    }
-                    if (data.clickevent === 'selectmultiple') {
-                        check_row_selection(data.level, data.fragment)  // Check if rows must be selected
+            var load_template = get_load_template(data)
+            if (load_template && data.form_is_valid) {
+                window.open(data.successurl, '_parent');
+            } else if (data.form_is_valid) {
+                var targetfragment = data.fragment
+                if (data.level > 0) {
+                    targetfragment = 'body'
+                }
+                if (data.html_header && data.level > 0) {
+                    document.getElementById(data.level.toString() + "_header").innerHTML = data.html_header;
+                }
+                if (data.html_body) {
+                    document.getElementById(data.level.toString() + "_" + targetfragment).innerHTML = data.html_body;
+                }
+                if (data.html_footer && data.level > 0) {
+                    document.getElementById(data.level.toString() + "_footer").innerHTML = data.html_footer;
+                }
+                if (data.level > 0) {
+                    set_classes_jqdialog(data) // Herewith we set the classes for the modal.dialog div
+                    var modallevel = $("#" + data.level.toString() + "_modal")
+                    if (modallevel.length > 0) {
+                        modallevel.modal('show');
                     }
                 } else {
-                    handle_messagelist(data.messagelist)
-                }
-                if ($(".js-save-form").length > 0) {
-                    var id_binded_form = $("#" + level.toString() + "_id_binded_form");
-                    if (id_binded_form.val() === "False") {
-                        var form = $("#" + level.toString() + "_modal");
-                        form.on("submit", ".js-save-form", {'level': level}, save_form);
-                        id_binded_form.val("True");
+                    if (!data.donotclose) {
+                        var modal1 = $('#1_modal')
+                        if (modal1.is(":visible")) {
+                            modal1.modal('hide');
+                            $('#1_body').innerHTML = ''
+                        }
                     }
-                    /* Passing data to a function ('save_form') in jquery is done by {'key':'value'} ('{'level': level}') and
-                       then by calling function_variable_name.data.key in the function where this is used (see 'save_form(event)' 'event.data.level') */
                 }
-                if (data.print_records && data.print_type && data.form_is_valid) {
-                    open_records_in_new_tab(data.print_records, data.print_type);
+                if (data.messagelist) {
+                    if (data.messagelist[2]) {
+                        handle_messagelist(data.messagelist)
+                    }
                 }
+                if (data.clickevent === 'selectmultiple') {
+                    check_row_selection(data.level, data.fragment)  // Check if rows must be selected
+                }
+            } else {
+                handle_messagelist(data.messagelist)
+            }
+            if ($(".js-save-form").length > 0) {
+                var id_binded_form = $("#" + level.toString() + "_id_binded_form");
+                if (id_binded_form.val() === "False") {
+                    var form = $("#" + level.toString() + "_modal");
+                    form.on("submit", ".js-save-form", {'level': level}, save_form);
+                    id_binded_form.val("True");
+                }
+                /* Passing data to a function ('save_form') in jquery is done by {'key':'value'} ('{'level': level}') and
+                   then by calling function_variable_name.data.key in the function where this is used (see 'save_form(event)' 'event.data.level') */
+            }
+            if (data.print_records && data.print_type && data.form_is_valid) {
+                open_records_in_new_tab(data.print_records, data.print_type);
             }
         }
     });

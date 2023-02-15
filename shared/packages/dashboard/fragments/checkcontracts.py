@@ -12,7 +12,6 @@
 #         self.pk = pk
 #         self.contenttitle = "Contractstatus"
 #         self.level = request.GET.get('level', 0)
-#         self.rights_crud = [{"read": "is_employee", "write": "is_employee"}]
 #         # self.fragmenttype = "summary"
 #         self.render_templates = {
 #             "refreshtarget": "fragment",

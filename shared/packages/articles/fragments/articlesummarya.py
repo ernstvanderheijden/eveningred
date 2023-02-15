@@ -13,7 +13,6 @@ class ArticlesummaryA(Basepackage, GlobalSummary):
         records = Article.objects.filter(id=pk).values('description', 'price', 'unittypeid__description', 'articlegroupid__description', 'vattypeid__description')
         for record in records:
             self.record = record
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.columnfields = {  # Fieldtypes are: boolean, char, date, email, number, decimal, phone, sex, textarea, textarea_html, pil_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
             "description": {"caption": "Artikel", "fieldtype": "char", },
             "price": {"caption": "Prijs excl. BTW", "fieldtype": "number", },

@@ -1,4 +1,4 @@
-from core.globals.global_functions import set_rights_for_module, encode_string, set_ctx_records_filter_ordering_paginate, create_ctx_slug, prepare_message
+from core.globals.global_functions import encode_string, set_ctx_records_filter_ordering_paginate, create_ctx_slug, prepare_message
 from shared.variables.template_variables import add_variables
 from django.template.loader import render_to_string
 from pydoc import locate
@@ -7,7 +7,6 @@ from pydoc import locate
 class RenderCtxAndContext:
     def __init__(self, request, ctx):
         self.ctx = ctx
-        self.ctx['rights'] = set_rights_for_module(request, self.ctx['rights_crud'])
         self.render_templates = ""
         self.ctx['successurl'] = encode_string(self.ctx['successurl_decoded'])
         if 'records' in self.ctx:
@@ -23,60 +22,44 @@ class RenderCtxAndContext:
         self.render_templates = self.ctx['render_templates']
 
     def render_fragment_list(self):
-        self.ctx['list_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['list_inner_data_html'] = render_to_string(self.render_templates['list_inner_data_html'], self.context)
-            self.ctx['list_pagination_html'] = render_to_string(self.render_templates['list_pagination_html'], self.context)
-            self.ctx['list_inner_html'] = render_to_string(self.render_templates['list_inner_html'], self.context)
-            self.ctx['list_html'] = render_to_string(self.render_templates['list_html'], self.context)
+        self.ctx['list_inner_data_html'] = render_to_string(self.render_templates['list_inner_data_html'], self.context)
+        self.ctx['list_pagination_html'] = render_to_string(self.render_templates['list_pagination_html'], self.context)
+        self.ctx['list_inner_html'] = render_to_string(self.render_templates['list_inner_html'], self.context)
+        self.ctx['list_html'] = render_to_string(self.render_templates['list_html'], self.context)
         return self.ctx['list_html']
 
     def render_fragment_list_inner(self):
-        self.ctx['list_inner_data_html'] = ""
         self.ctx['list_pagination_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['list_inner_data_html'] = render_to_string(self.render_templates['list_inner_data_html'], self.context)
-            if self.ctx['paginate']:
-                self.ctx['list_pagination_html'] = render_to_string(self.render_templates['list_pagination_html'], self.context)
+        self.ctx['list_inner_data_html'] = render_to_string(self.render_templates['list_inner_data_html'], self.context)
+        if self.ctx['paginate']:
+            self.ctx['list_pagination_html'] = render_to_string(self.render_templates['list_pagination_html'], self.context)
         return [self.ctx['list_inner_data_html'], self.ctx['list_pagination_html']]
 
     def render_fragment_summary(self):
-        self.ctx['summary_html'] = ""
-        if self.ctx['rights']['read']:
-            if 'summary_inner_html' in self.ctx:
-                self.ctx['summary_inner_html'] = render_to_string(self.render_templates['summary_inner_html'], self.context)
-            self.ctx['summary_html'] = render_to_string(self.render_templates['summary_html'], self.context)
+        if 'summary_inner_html' in self.ctx:
+            self.ctx['summary_inner_html'] = render_to_string(self.render_templates['summary_inner_html'], self.context)
+        self.ctx['summary_html'] = render_to_string(self.render_templates['summary_html'], self.context)
         return self.ctx['summary_html']
 
     def render_fragment_summary_inner(self):
-        self.ctx['summary_inner_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['summary_inner_html'] = render_to_string(self.render_templates['summary_inner_html'], self.context)
+        self.ctx['summary_inner_html'] = render_to_string(self.render_templates['summary_inner_html'], self.context)
         return self.ctx['summary_inner_html']
 
     def render_fragment_action(self):
-        self.ctx['action_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['action_html'] = render_to_string(self.render_templates['action_html'], self.context)
+        self.ctx['action_html'] = render_to_string(self.render_templates['action_html'], self.context)
         return self.ctx['action_html']
 
     def render_fragment_inlineformset(self):
-        self.ctx['inlineformset_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['inlineformset_html'] = render_to_string(self.render_templates['inlineformset_html'], self.context)
+        self.ctx['inlineformset_html'] = render_to_string(self.render_templates['inlineformset_html'], self.context)
         return self.ctx['inlineformset_html']
 
     def render_fragment_grid(self):
-        self.ctx['grid_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['grid_inner_html'] = render_to_string(self.render_templates['grid_inner_html'], self.context)
-            self.ctx['grid_html'] = render_to_string(self.render_templates['grid_html'], self.context)
+        self.ctx['grid_inner_html'] = render_to_string(self.render_templates['grid_inner_html'], self.context)
+        self.ctx['grid_html'] = render_to_string(self.render_templates['grid_html'], self.context)
         return self.ctx['grid_html']
 
     def render_fragment_grid_inner(self):
-        self.ctx['grid_inner_html'] = ""
-        if self.ctx['rights']['read']:
-            self.ctx['grid_inner_html'] = render_to_string(self.render_templates['grid_inner_html'], self.context)
+        self.ctx['grid_inner_html'] = render_to_string(self.render_templates['grid_inner_html'], self.context)
         return self.ctx['grid_inner_html']
 
 

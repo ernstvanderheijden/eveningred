@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='Dashboard',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dashboard', models.CharField(blank=True, default='Just needed for rights', max_length=100, null=True)),
+                ('dashboard', models.CharField(blank=True, default='Just needed for permissions', max_length=100, null=True)),
                 ('createdate', models.DateTimeField(auto_now_add=True)),
                 ('updatedate', models.DateTimeField(auto_now=True)),
                 ('creatorid', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='creatorid_dashboard', to=settings.AUTH_USER_MODEL)),

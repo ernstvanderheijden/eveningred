@@ -7,13 +7,6 @@ function keyinputOk(key) {
     return key !== "Meta" && key !== "Escape" && key !== "Alt" && key !== "Tab" && key !== "Control" && key !== "Shift" && key !== "CapsLock" && key !== "Enter" && key !== "ArrowUp" && key !== "ArrowRight" && key !== "ArrowDown" && key !== "ArrowLeft";
 }
 
-function redirect_no_rights(data) {
-    if (data.not_allowed) {
-        window.open("/403/", "_parent");
-        return true
-    }
-}
-
 function set_element_disabled(id) {
     document.getElementById(id).disabled = true;
 }

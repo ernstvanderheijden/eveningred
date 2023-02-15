@@ -1,4 +1,4 @@
-from core.globals.global_functions import set_rights_for_module, create_ctx_slug
+from core.globals.global_functions import create_ctx_slug
 from pydoc import locate
 from shared.menumodules import lefttop, leftbottom
 
@@ -36,8 +36,6 @@ def create_chapterctxdata(request, viewtype=None, pk=None):
             modulepath = "shared.packages." + package.lower() + ".chapters." + chapter.lower()
             nameclass = getattr(locate(modulepath), chapter.title())
         ctx.update(vars(nameclass(request, viewtype, pk)))
-        """Set module rights"""
-        ctx.update({"rights": set_rights_for_module(request, ctx['rights_crud'])})
         ctx.update({"html_header": "core/modals/modalheader.html"})
         ctx.update({"html_footer": "core/modals/modalfooter.html"})
     ctx = create_ctx_slug(ctx)

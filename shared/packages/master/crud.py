@@ -10,7 +10,6 @@ class Crud:
         self.record = ''
 
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.order_by = "description"
         self.successurl = request.GET.get('successurl', '')
         self.templatename = 'core/forms/form.html'

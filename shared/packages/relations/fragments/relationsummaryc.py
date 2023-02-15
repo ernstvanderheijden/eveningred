@@ -9,7 +9,6 @@ class RelationsummaryC(Basepackage, GlobalSummary):
         GlobalSummary.__init__(self, request)
         self.fragment = __class__.__name__.lower()
         self.contenttitle = ""
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.columnfields = {  # Fieldtypes are: boolean, boolean_true, char, date, email, number, decimal, phone, sex, textarea, textarea_html, pill_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
             "street": {"caption": "Straatnaam", "fieldtype": "char", },
             "number": {"caption": "Nummer", "fieldtype": "char", },

@@ -35,11 +35,6 @@ class GlobalTemplate(PrivateBase, TemplateView):
         context.update({"ctx": self.ctx})
         return context
 
-    def render_to_response(self, context, **response_kwargs):  # Check if the request is Ajax or not
-        if not self.ctx['rights']['read']:
-            return HttpResponseNotAllowed("Geen rechten")
-        return super(GlobalTemplate, self).render_to_response(context, **response_kwargs)
-
 
 class GlobalCreate(PrivateBase, CreateView):
     viewtype = "create"
@@ -61,17 +56,11 @@ class GlobalCreate(PrivateBase, CreateView):
 
     def render_to_response(self, context, **response_kwargs):  # Check if the request is Ajax or not
         if is_ajax_request(self.request):
-            if not self.ctx['rights']['write']:
-                data = dict()
-                data['not_allowed'] = True
-            else:
-                set_ajax_variables(self.request, self.ctx, self.data, context, self.templatename)
-                data = self.data
+            set_ajax_variables(self.request, self.ctx, self.data, context, self.templatename)
+            data = self.data
             self.data = dict()
             return JsonResponse(data, safe=False, **response_kwargs)
         else:
-            if not self.ctx['rights']['write']:
-                return HttpResponseNotAllowed("Geen rechten")
             self.templatename = self.ctx['templatename']
             return super(GlobalCreate, self).render_to_response(context, **response_kwargs)
 
@@ -91,25 +80,21 @@ class GlobalCreate(PrivateBase, CreateView):
             return JsonResponse(data)
 
     def form_valid(self, form, **kwargs):  # Do stuff with the content before saving the form
-        if not self.ctx['rights']['write']:
-            data = dict()
-            data['not_allowed'] = True
+        successurl = self.request.GET.get('successurl', '')
+        self.data['successurl'] = decode_string(successurl)
+        if self.request.GET.get('formset', '') == 'true':
+            form.save()
         else:
-            successurl = self.request.GET.get('successurl', '')
-            self.data['successurl'] = decode_string(successurl)
-            if self.request.GET.get('formset', '') == 'true':
-                form.save()
-            else:
-                record = form.save()
-                self.data['successurl'] = update_successurl(self.data['successurl'], record.id)
-                add_extra_execute_options = getattr(locate('shared.extra_execute_options'), 'add_extra_execute_options')
-                if add_extra_execute_options and self.ctx['package']:  # Check the existance of the file extra_refusals.py in shared
-                    add_extra_execute_options(self, record)
-            self.data['level'] = self.request.GET.get('level', '')
-            prepare_message(self.request, self.ctx, self.data, messages)
-            self.data['form_is_valid'] = True
-            data = self.data
-            self.data = dict()
+            record = form.save()
+            self.data['successurl'] = update_successurl(self.data['successurl'], record.id)
+            add_extra_execute_options = getattr(locate('shared.extra_execute_options'), 'add_extra_execute_options')
+            if add_extra_execute_options and self.ctx['package']:  # Check the existance of the file extra_refusals.py in shared
+                add_extra_execute_options(self, record)
+        self.data['level'] = self.request.GET.get('level', '')
+        prepare_message(self.request, self.ctx, self.data, messages)
+        self.data['form_is_valid'] = True
+        data = self.data
+        self.data = dict()
         return JsonResponse(data, status=200)
 
 
@@ -138,17 +123,11 @@ class GlobalUpdate(PrivateBase, UpdateView):
 
     def render_to_response(self, context, **response_kwargs):  # Check if the request is Ajax or not
         if is_ajax_request(self.request):
-            if not self.ctx['rights']['write']:
-                data = dict()
-                data['not_allowed'] = True
-            else:
-                set_ajax_variables(self.request, self.ctx, self.data, context, self.templatename)
-                data = self.data
+            set_ajax_variables(self.request, self.ctx, self.data, context, self.templatename)
+            data = self.data
             self.data = dict()
             return JsonResponse(data, safe=False, **response_kwargs)
         else:
-            if not self.ctx['rights']['write']:
-                return HttpResponseNotAllowed("Geen rechten")
             self.templatename = self.ctx['templatename']
             return super(GlobalUpdate, self).render_to_response(context, **response_kwargs)
 
@@ -168,35 +147,31 @@ class GlobalUpdate(PrivateBase, UpdateView):
             return JsonResponse(data)
 
     def form_valid(self, form, **kwargs):  # Do stuff with the content before saving the form
-        if not self.ctx['rights']['write']:
-            data = dict()
-            data['not_allowed'] = True
-        else:
-            record = form.save()
-            if self.request.GET.get('passwordform', '') == 'true':
-                update_session_auth_hash(self.request, form.user)
-            if 'status_current' in self.ctx and 'status_next' in self.ctx:
-                if record.status == self.ctx['status_current']:
-                    record.status = self.ctx['status_next']
-                    record.save()
-            successurl = self.request.GET.get('successurl', '')
-            self.data['successurl'] = decode_string(successurl)
-            self.data['successurl'] = update_successurl(self.data['successurl'], record.id)
-            self.data['level'] = self.request.GET.get('level', '')
+        record = form.save()
+        if self.request.GET.get('passwordform', '') == 'true':
+            update_session_auth_hash(self.request, form.user)
+        if 'status_current' in self.ctx and 'status_next' in self.ctx:
+            if record.status == self.ctx['status_current']:
+                record.status = self.ctx['status_next']
+                record.save()
+        successurl = self.request.GET.get('successurl', '')
+        self.data['successurl'] = decode_string(successurl)
+        self.data['successurl'] = update_successurl(self.data['successurl'], record.id)
+        self.data['level'] = self.request.GET.get('level', '')
 
-            # Check extra update_actions to add to self.data
-            if 'print_records' in self.data:
-                del self.data['print_records']
-            if 'print_type' in self.data:
-                del self.data['print_type']
-            add_extra_execute_options = getattr(locate('shared.extra_execute_options'), 'add_extra_execute_options')
-            if add_extra_execute_options and self.ctx['package']:  # Check the existance of the file extra_refusals.py in shared
-                add_extra_execute_options(self, record)
+        # Check extra update_actions to add to self.data
+        if 'print_records' in self.data:
+            del self.data['print_records']
+        if 'print_type' in self.data:
+            del self.data['print_type']
+        add_extra_execute_options = getattr(locate('shared.extra_execute_options'), 'add_extra_execute_options')
+        if add_extra_execute_options and self.ctx['package']:  # Check the existance of the file extra_refusals.py in shared
+            add_extra_execute_options(self, record)
 
-            prepare_message(self.request, self.ctx, self.data, messages)
-            self.data['form_is_valid'] = True
-            data = self.data
-            self.data = dict()
+        prepare_message(self.request, self.ctx, self.data, messages)
+        self.data['form_is_valid'] = True
+        data = self.data
+        self.data = dict()
         return JsonResponse(data)
 
 
@@ -223,17 +198,11 @@ class GlobalDelete(PrivateBase, DeleteView):
 
     def render_to_response(self, context, **response_kwargs):  # Delete is always Ajax
         if is_ajax_request(self.request):
-            if not self.ctx['rights']['write']:
-                data = dict()
-                data['not_allowed'] = True
-            else:
-                set_ajax_variables(self.request, self.ctx, self.data, context, self.templatename)
-                data = self.data
+            set_ajax_variables(self.request, self.ctx, self.data, context, self.templatename)
+            data = self.data
             self.data = dict()
             return JsonResponse(data, safe=False, **response_kwargs)
         else:
-            if not self.ctx['rights']['write']:
-                return HttpResponseNotAllowed("Geen rechten")
             self.templatename = self.ctx['templatename']
             return super(GlobalDelete, self).render_to_response(context, **response_kwargs)
 
@@ -253,31 +222,27 @@ class GlobalDelete(PrivateBase, DeleteView):
             return JsonResponse(data)
 
     def form_valid(self, request, *args, **kwargs):
-        if not self.ctx['rights']['write']:
-            data = dict()
-            data['not_allowed'] = True
-        else:
-            closelevel = None
-            if self.request.GET.get('closelevel', ''):
-                closelevel = int(self.request.GET.get('closelevel'))
+        closelevel = None
+        if self.request.GET.get('closelevel', ''):
+            closelevel = int(self.request.GET.get('closelevel'))
 
-            try:
-                # Check extra refusals before delete
-                extra_delete_refusals = False
-                check_extra_delete_refusals = getattr(locate('shared.extra_refusals'), 'check_extra_delete_refusals')
-                if check_extra_delete_refusals and self.ctx['package'] and self.ctx['modelname']:  # Check the existance of the file extra_refusals.py in shared
-                    extra_delete_refusals = check_extra_delete_refusals(self.request, self.ctx['package'], self.ctx['modelname'], self.object)
+        try:
+            # Check extra refusals before delete
+            extra_delete_refusals = False
+            check_extra_delete_refusals = getattr(locate('shared.extra_refusals'), 'check_extra_delete_refusals')
+            if check_extra_delete_refusals and self.ctx['package'] and self.ctx['modelname']:  # Check the existance of the file extra_refusals.py in shared
+                extra_delete_refusals = check_extra_delete_refusals(self.request, self.ctx['package'], self.ctx['modelname'], self.object)
 
-                if not self.ctx['deny_del_or_upd'] and not extra_delete_refusals:
-                    self.object.delete()
-                self.data['form_is_valid'] = True
-            except ProtectedError:
-                self.data['form_is_valid'] = False
-            self.data['successurl'] = decode_string(self.request.GET.get('successurl'))
-            self.data['level'] = self.ctx['level']
-            prepare_message(request, self.ctx, self.data, messages)
-            if closelevel:
-                self.data['closelevel'] = closelevel  # This, to also close the update_modal via ajax.js
-            data = self.data
-            self.data = dict()
+            if not self.ctx['deny_del_or_upd'] and not extra_delete_refusals:
+                self.object.delete()
+            self.data['form_is_valid'] = True
+        except ProtectedError:
+            self.data['form_is_valid'] = False
+        self.data['successurl'] = decode_string(self.request.GET.get('successurl'))
+        self.data['level'] = self.ctx['level']
+        prepare_message(request, self.ctx, self.data, messages)
+        if closelevel:
+            self.data['closelevel'] = closelevel  # This, to also close the update_modal via ajax.js
+        data = self.data
+        self.data = dict()
         return JsonResponse(data)

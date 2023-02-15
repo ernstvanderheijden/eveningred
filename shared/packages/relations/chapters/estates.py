@@ -12,7 +12,6 @@ class Estates(Basechapter):
         self.pk = pk
         self.viewtype = viewtype
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.fragments = [
             {
                 fragmentname1: {

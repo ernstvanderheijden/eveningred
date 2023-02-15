@@ -15,7 +15,6 @@ class Detail(Basechapter):
         if request.GET.get('pk', ''):
             self.pk = request.GET.get('pk')
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_active", "write": "is_employee"}]
 
         self.tools = {}
         self.fragments = [

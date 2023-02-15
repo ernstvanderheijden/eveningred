@@ -3,7 +3,6 @@ def set_moduledata(request):
     moduledata = [{}]
 
     """ User menu """    """ Build Submenu's first """
-    # if request.tenant.rights.is_wpr and request.user.rights.is_wpr:
     if request:
         sublist = list()
         # if request.user.is_staff or request.user.is_superuser:

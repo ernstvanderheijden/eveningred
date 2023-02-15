@@ -10,7 +10,6 @@ class List(Basechapter):
     def __init__(self, request, viewtype=None, pk=None):
         super().__init__(request, pk)
         self.level = request.GET.get('level', 0)
-        self.rights_crud = [{"read": "is_employee", "write": "is_employee"}, {"read": "is_manager", "write": "is_manager"}]
         self.tools = {
         }
         self.fragments = [

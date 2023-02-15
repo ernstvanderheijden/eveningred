@@ -15,10 +15,11 @@ class UserAccessMixin(PermissionRequiredMixin):
     # redirect_field_name = 'next'
 
     def dispatch(self, request, *args, **kwargs):
-        self.permission_required = set_required_rights(request, 'projects', 'projectform')
         if not request.user.is_authenticated:
             return redirect_to_login(request.get_full_path(),
                                      self.get_login_url(), self.get_redirect_field_name())
+        self.permission_required = set_required_permissions(request)
+
         if not self.has_permission():
             if is_ajax_request(request):
                 data = dict()
@@ -27,14 +28,13 @@ class UserAccessMixin(PermissionRequiredMixin):
                 return redirect('/403/')
 
         permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
+        print("PLOK permissions", permissions)
         for p in permissions:
-            print("PLOK rights", p, request.user)
+            print("PLOK permissions", p, request.user)
         return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
 
-# http://klant1.eveningred.nl:8000/core/template/?level=0&package=projects&chapter=list
 
-
-def set_required_rights(request, package, chapter):
+def set_required_permissions(request):
     package = ''
     chapter = ''
     nameform = ''
@@ -64,9 +64,19 @@ def set_required_rights(request, package, chapter):
         modelname = get_modelname(package, chapter)
 
     if not crudtype:
-        permission_required = 'dashboard.view_dashboard'
+        permission_required = 'auth.view_permission'
+    elif package == 'users' and chapter == 'myprofile':
+        permission_required = 'auth.view_permission'
+    elif package == 'users' and nameform == 'userprofileform':
+        permission_required = 'auth.view_permission'
     else:
-        permission_required = package + '.' + crudtype + '_' + modelname
+        print('PLOK nameform', nameform)
+        match nameform:
+            case 'some_form':
+                print("PLOK some_form")
+                permission_required = 'auth.view_permission'
+            case _:
+                permission_required = package + '.' + crudtype + '_' + modelname
     return permission_required
 
 

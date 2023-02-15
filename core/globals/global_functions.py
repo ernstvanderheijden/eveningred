@@ -27,19 +27,6 @@ def check_session_variables(request):
         set_user_variables(request)
 
 
-def set_rights_for_module(request, rights_crud):
-    list_rights_crud = {"read": False, "write": False}
-    if request.user.id:
-        user = User.objects.get(id=request.user.id)
-        for rights in rights_crud:
-            if getattr(user, rights['read']):
-                list_rights_crud.update({"read": True})
-            if getattr(user, rights['write']):
-                list_rights_crud.update({"write": True})
-    # return list_rights_crud
-    return {"read": True, "write": True}
-
-
 def get_model_from_fragment(request):
     package = request.GET.get('package', '')
     fragment = request.GET.get('fragment', '')

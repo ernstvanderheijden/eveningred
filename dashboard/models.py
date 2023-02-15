@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Dashboard(models.Model):
-    dashboard = models.CharField(max_length=100, default="Just needed for rights", null=True, blank=True)
+    dashboard = models.CharField(max_length=100, default="Just needed for permissions", null=True, blank=True)
     createdate = models.DateTimeField(auto_now_add=True)
     updatedate = models.DateTimeField(auto_now=True)
     creatorid = models.ForeignKey('users.User', null=True, blank=True, on_delete=models.PROTECT, related_name='creatorid_dashboard')
