@@ -35,30 +35,34 @@ class Detail(Basechapter):
                 },
             })
 
-        self.tools.update({
-            "update": {
-                "title": "fas fa-pen",
-                "tooltype": "update",
-                "class": "btn btn-primary",
-                "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
-            },
-            "delete": {
-                "title": "fas fa-trash-alt",
-                "tooltype": "delete",
-                "class": "btn btn-danger",
-                "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
-            },
-        })
-        if self.record.is_default:
+        if request.user.has_perm('configuration.change_configuration'):
             self.tools.update({
-                "delete": {
-                    "title": "fas fa-trash-alt",
-                    "tooltype": "delete",
-                    "class": "btn btn-dark",
-                    "url": "",
-                    "disabled": True,
-                },
+                "update": {
+                    "title": "fas fa-pen",
+                    "tooltype": "update",
+                    "class": "btn btn-primary",
+                    "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
+                }
             })
+            if request.user.has_perm('configuration.delete_configuration'):
+                self.tools.update({
+                    "delete": {
+                        "title": "fas fa-trash-alt",
+                        "tooltype": "delete",
+                        "class": "btn btn-danger",
+                        "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
+                    }
+                })
+                if self.record.is_default:
+                    self.tools.update({
+                        "delete": {
+                            "title": "fas fa-trash-alt",
+                            "tooltype": "delete",
+                            "class": "btn btn-dark",
+                            "url": "",
+                            "disabled": True,
+                        },
+                    })
 
         self.fragments = [
             {

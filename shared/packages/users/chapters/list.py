@@ -10,8 +10,7 @@ class List(Basechapter):
     def __init__(self, request, viewtype=None, pk=None):
         super().__init__(request, pk)
         self.level = request.GET.get('level', 0)
-        self.tools = {
-        }
+        self.tools = {}
         self.fragments = [
             {
                 fragmentname1: {

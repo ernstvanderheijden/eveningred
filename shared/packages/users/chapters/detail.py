@@ -18,35 +18,37 @@ class Detail(Basechapter):
         self.pk = pk
         self.viewtype = viewtype
         self.level = request.GET.get('level', 0)
-
-        self.tools = {
-            "usersendinvitation": {
-                "title": "fas fa-paper-plane",
-                "tooltype": "update",
-                "class": "btn btn-success",
-                "url": "/shared/action/actions/?level=" + str(int(self.level)) + "&pk=" + str(self.pk) + "&action=usersendinvitation&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
-            },
-            "update": {
-                "title": "fas fa-pen",
-                "tooltype": "update",
-                "class": "btn btn-primary",
-                "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
-            },
-            "delete": {
-                "title": "fas fa-trash-alt",
-                "tooltype": "delete",
-                "class": "btn btn-danger",
-                "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
-            },
-        }
-        if int(self.pk) == request.user.id:
-            self.tools['delete'].update({
-                "url": "",
-                "disabled": True,
+        self.tools = {}
+        if request.user.has_perm('users.change_user'):
+            self.tools.update({
+                "usersendinvitation": {
+                    "title": "fas fa-paper-plane",
+                    "tooltype": "update",
+                    "class": "btn btn-success",
+                    "url": "/shared/action/actions/?level=" + str(int(self.level)) + "&pk=" + str(self.pk) + "&action=usersendinvitation&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
+                },
+                "update": {
+                    "title": "fas fa-pen",
+                    "tooltype": "update",
+                    "class": "btn btn-primary",
+                    "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
+                }
             })
+        if request.user.has_perm('users.delete_user'):
+            self.tools.update({
+                "delete": {
+                    "title": "fas fa-trash-alt",
+                    "tooltype": "delete",
+                    "class": "btn btn-danger",
+                    "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
+                },
+            })
+            if int(self.pk) == request.user.id:
+                self.tools['delete'].update({
+                    "url": "",
+                    "disabled": True,
+                })
 
-        # if not self.allow_update:
-        #     self.tools['update'].update({"disabled": True, "url": ""})
         self.fragments = [
             {
                 fragmentname1: {

@@ -27,16 +27,13 @@ class Myprofile(Basechapter):
                 "class": "btn btn-primary",
                 "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crudchangepassword&nameform=" + nameform + "&passwordform=true&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
             },
-            "update": {
-                "title": "fas fa-pen",
-                "tooltype": "update",
-                "class": "btn btn-primary",
-                "url": "/core/update/" + str(self.pk) + "?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
-            },
+            # "update": {
+            #     "title": "fas fa-pen",
+            #     "tooltype": "update",
+            #     "class": "btn btn-primary",
+            #     "url": "/core/update/" + str(self.pk) + "?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
+            # },
         }
-
-        # if not self.allow_update:
-        #     self.tools['update'].update({"disabled": True, "url": ""})
         self.fragments = [
             {
                 fragmentname1: {

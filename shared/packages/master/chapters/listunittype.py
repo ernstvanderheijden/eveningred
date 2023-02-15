@@ -11,8 +11,7 @@ class Listunittype(Basechapter):
         super().__init__(request, pk)
         # self.context = add_variables(request)
         self.level = request.GET.get('level', 0)
-        self.tools = {
-        }
+        self.tools = {}
         self.fragments = [
             {
                 fragmentname1: {

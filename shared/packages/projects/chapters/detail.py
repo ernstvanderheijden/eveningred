@@ -19,27 +19,25 @@ class Detail(Basechapter):
         self.pk = pk
         self.viewtype = viewtype
         self.level = request.GET.get('level', 0)
-
-        self.tools = {
-            "update": {
-                "title": "fas fa-pen",
-                "tooltype": "update",
-                "class": "btn btn-primary",
-                "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
-            },
-            "delete": {
-                "title": "fas fa-trash-alt",
-                "tooltype": "delete",
-                "class": "btn btn-danger",
-                "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
-            },
-        }
-        # record = Project.objects.get(id=self.pk)
-        # if record.is_master:
-        #     self.tools['delete'].update({
-        #         "url": "",
-        #         "disabled": True,
-        #     })
+        self.tools = {}
+        if request.user.has_perm('projects.change_project'):
+            self.tools.update({
+                "update": {
+                    "title": "fas fa-pen",
+                    "tooltype": "update",
+                    "class": "btn btn-primary",
+                    "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
+                }
+            })
+        if request.user.has_perm('projects.delete_project'):
+            self.tools.update({
+                "delete": {
+                    "title": "fas fa-trash-alt",
+                    "tooltype": "delete",
+                    "class": "btn btn-danger",
+                    "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
+                }
+            })
 
         self.fragments = [
             {
