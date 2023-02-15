@@ -63,12 +63,12 @@ class Relation(models.Model):
             raise ValidationError({
                 'relationname': ValidationError("Of `Relatienaam` of `Achternaam `invullen.")
             })
-        # match self.sendmethod:
-        #     case 1:
-        #         if self.email is None:
-        #             raise ValidationError({
-        #                 'sendmethod': ValidationError("Bij verzendmethode 'e-mail' is een e-mailadres verplicht.")
-        #             })
+        match self.sendmethod:
+            case 1:
+                if self.email is None:
+                    raise ValidationError({
+                        'sendmethod': ValidationError("Bij verzendmethode 'e-mail' is een e-mailadres verplicht.")
+                    })
 
     def save(self, *args, **kwargs):
         if self.licenseplate:
