@@ -18,12 +18,6 @@ class Basechapter(Basepackage):
                         "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=detail&pk=" + str(pk),
                     },
                 },
-                {
-                    "Objecten": {
-                        "name_active_chapter": "estates",
-                        "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=estates&pk=" + str(pk),
-                    },
-                },
             ]
         else:
             self.chaptermenu = []
