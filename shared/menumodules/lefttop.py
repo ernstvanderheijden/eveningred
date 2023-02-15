@@ -8,7 +8,8 @@ def set_moduledata(request):
         },
     })
 
-    if request.user.is_employee:
+
+    if request.user.has_perm('relations.view_relation'):
         moduledata.append({
             "Relatiebeheer": {
                 "url": "/core/template/?level=0&package=relations&chapter=list",
@@ -16,7 +17,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('projects.view_project'):
         moduledata.append({
             "Projectbeheer": {
                 "url": "/core/template/?level=0&package=projects&chapter=list",
@@ -24,7 +25,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('articles.view_article'):
         moduledata.append({
             "Artikelbeheer": {
                 "url": "/core/template/?level=0&package=articles&chapter=list",
@@ -33,7 +34,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('users.view_user'):
         moduledata.append({
             "Gebruikersbeheer": {
                 "url": "/core/template/?level=0&package=users&chapter=list",
@@ -41,7 +42,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('master.view_articlegroup'):
         moduledata.append({
             "Stamgegevens": {
                 "url": "/core/template/?level=0&package=master&chapter=listarticlegroup",
@@ -49,7 +50,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('emails.view_email'):
         moduledata.append({
             "Verzonden mail": {
                 "url": "/core/template/?level=0&package=emails&chapter=list",
@@ -57,7 +58,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('applog.view_applog'):
         moduledata.append({
             "Logboek": {
                 "url": "/core/template/?level=0&package=applog&chapter=list",
@@ -65,7 +66,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.is_employee:
+    if request.user.has_perm('configuration.view_configuration'):
         moduledata.append({
             "Instellingen": {
                 "url": "/core/template/?level=0&package=configuration&chapter=list",

@@ -20,6 +20,7 @@ class UserAccessMixin(PermissionRequiredMixin):
                                      self.get_login_url(), self.get_redirect_field_name())
         self.permission_required = set_required_permissions(request)
 
+        # print("PLOK self.has_permission()", self.has_permission())
         if not self.has_permission():
             if is_ajax_request(request):
                 data = dict()
@@ -27,10 +28,10 @@ class UserAccessMixin(PermissionRequiredMixin):
             else:
                 return redirect('/403/')
 
-        permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
-        print("PLOK permissions", permissions)
-        for p in permissions:
-            print("PLOK permissions", p, request.user)
+        # permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
+        # print("PLOK permissions", permissions)
+        # for p in permissions:
+        #     print("PLOK permissions", p, request.user)
         return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
 
 
@@ -63,12 +64,14 @@ def set_required_permissions(request):
     if not modelname:
         modelname = get_modelname(package, chapter)
 
-    if not crudtype:
+    if package == 'dashboard' and chapter == 'detail':
         permission_required = 'auth.view_permission'
     elif package == 'users' and chapter == 'myprofile':
         permission_required = 'auth.view_permission'
     elif package == 'users' and nameform == 'userprofileform':
         permission_required = 'auth.view_permission'
+    # elif not crudtype:
+    #     permission_required = 'auth.view_permission'
     else:
         print('PLOK nameform', nameform)
         match nameform:
