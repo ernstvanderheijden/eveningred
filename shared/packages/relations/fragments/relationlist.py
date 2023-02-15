@@ -17,6 +17,7 @@ class Relationlist(GlobalList):
         self.paginatesize_overwrite = ''
         self.displayfield = 'relationname'
         self.successurl_decoded = "/core/fragment/?level=" + self.level + "&package=" + self.package + "&fragment=" + self.fragment + "&pk=" + str(self.pk) + "&fragmentrefresh=data_" + self.fragment + "&refreshtarget=data&page=1"
+
         if request.user.has_perm('relations.add_relation'):
             self.tools.update({
                 'create': {
