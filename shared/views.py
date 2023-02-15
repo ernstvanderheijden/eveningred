@@ -2,7 +2,7 @@
 # from contracts.models import Contractline
 # from core.functions.render_fragments import fragmentdatabuilder
 # from core.globals.global_functions import clean_fields, decode_string
-# from django.contrib.auth.decorators import user_passes_test
+# from django.contrib.auth.decorators import login_required
 # from django.http import JsonResponse, HttpResponse
 # from django.shortcuts import get_object_or_404, redirect
 # from django.template.loader import render_to_string
@@ -86,7 +86,7 @@
 #
 #
 # @csrf_exempt
-# @user_passes_test(lambda u: u.is_employee)
+# @login_required
 # def save_checkbox(request):
 #     data = dict()
 #     record = dict()
@@ -107,7 +107,7 @@
 #
 #
 # @csrf_exempt
-# @user_passes_test(lambda u: u.is_employee)
+# @login_required
 # def save_value(request):
 #     data = dict()
 #     record = dict()
@@ -171,7 +171,7 @@
 #
 #
 # @csrf_exempt
-# @user_passes_test(lambda u: u.is_employee)
+# @login_required
 # def save_record(request):
 #     data = dict()
 #     data['refresh_fields'] = dict()

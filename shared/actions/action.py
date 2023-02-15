@@ -1,11 +1,11 @@
 from core.globals.global_functions import decode_string
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
 @csrf_exempt
-@user_passes_test(lambda u: u.is_employee)
+@login_required
 def actions(request):
     data = dict()
     ctx = dict()

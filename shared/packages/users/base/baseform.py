@@ -26,22 +26,6 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
             "required": True,
             "blocked_when_used": True,
         }
-        self.is_employee = {
-            "label": "Medewerker",
-            "required": False,
-        }
-        self.is_employee_read = {
-            "label": "Medewerker leesrechten",
-            "required": False,
-        }
-        self.is_employee_write = {
-            "label": "Medewerker schrijfrechten",
-            "required": False,
-        }
-        self.is_manager = {
-            "label": "Manager",
-            "required": False,
-        }
         self.status = {
             "label": "Status",
             "required": True,

@@ -2,7 +2,7 @@ from core.functions.render_fragments import fragmentdatabuilder, confirmdatabuil
 from core.globals.global_access import UserAccessMixin
 from core.globals.global_functions import decode_string
 from core.globals.global_private_views import GlobalPrivateTemplate, GlobalPrivateCreate, GlobalPrivateUpdate, GlobalPrivateDelete
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_protect
@@ -12,13 +12,13 @@ class Template(UserAccessMixin, GlobalPrivateTemplate):
     pass
 
 
-@user_passes_test(lambda u: u.is_employee)
+@login_required
 def fragment(request):
     data = fragmentdatabuilder(request, {})
     return JsonResponse(data)
 
 
-@user_passes_test(lambda u: u.is_employee)
+@login_required
 def confirm(request):
     data = confirmdatabuilder(request, {})
     return JsonResponse(data)

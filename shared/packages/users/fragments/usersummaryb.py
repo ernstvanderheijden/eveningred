@@ -19,21 +19,5 @@ class UsersummaryB(Basepackage, GlobalSummary):
                 "caption": "Status",
                 "fieldtype": "status_choice",
             },
-            "is_employee": {
-                "caption": "Medewerker",
-                "fieldtype": "boolean",
-            },
-            "is_employee_read": {
-                "caption": "Medewerker leesrechten",
-                "fieldtype": "boolean",
-            },
-            "is_employee_write": {
-                "caption": "Medewerker schrijfrechten",
-                "fieldtype": "boolean",
-            },
-            "is_manager": {
-                "caption": "Manager",
-                "fieldtype": "boolean",
-            },
         }
         self.record = User.objects.filter(id=pk).values(*self.columnfields.keys(), 'id',)[0]
