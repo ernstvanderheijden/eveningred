@@ -84,11 +84,11 @@ def get_modelname(package, chapter):
     if package == 'dashboard':
         modelname = 'dashboard'
     elif package == 'applog':
-        modelname = 'dashboard'
+        modelname = 'applog'
     elif package == 'article':
         modelname = 'dashboard'
     elif package == 'configuration':
-        modelname = 'dashboard'
+        modelname = 'configuration'
     elif package == 'master':
         modelname = chapter[4:len(chapter)]
     else:
