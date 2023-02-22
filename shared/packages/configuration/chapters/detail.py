@@ -46,22 +46,22 @@ class Detail(Basechapter):
             })
             if request.user.has_perm('configuration.delete_configuration'):
                 self.tools.update({
-                    "delete": {
-                        "title": "fas fa-trash-alt",
-                        "tooltype": "delete",
-                        "class": "btn btn-danger",
-                        "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
-                    }
+                    # "delete": {
+                    #     "title": "fas fa-trash-alt",
+                    #     "tooltype": "delete",
+                    #     "class": "btn btn-danger",
+                    #     "url": "/core/delete/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_list)
+                    # }
                 })
                 if self.record.is_default:
                     self.tools.update({
-                        "delete": {
-                            "title": "fas fa-trash-alt",
-                            "tooltype": "delete",
-                            "class": "btn btn-dark",
-                            "url": "",
-                            "disabled": True,
-                        },
+                        # "delete": {
+                        #     "title": "fas fa-trash-alt",
+                        #     "tooltype": "delete",
+                        #     "class": "btn btn-dark",
+                        #     "url": "",
+                        #     "disabled": True,
+                        # },
                     })
 
         self.fragments = [
@@ -90,13 +90,13 @@ class Detail(Basechapter):
                 },
             },
             {
-                "configurationsummaryc": {  # Don't forget to give this option the name of the list
+                "configurationsummarye": {  # Don't forget to give this option the name of the list
                     "rendered_string": RenderCtxAndContext(request, vars(Configurationsummarye(request, self.pk))).render_fragment_summary(),
                     "width": 6,
                 },
             },
             {
-                "configurationsummaryd": {  # Don't forget to give this option the name of the list
+                "configurationsummaryf": {  # Don't forget to give this option the name of the list
                     "rendered_string": RenderCtxAndContext(request, vars(Configurationsummaryf(request, self.pk))).render_fragment_summary(),
                     "width": 6,
                 },

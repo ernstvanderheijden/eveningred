@@ -9,7 +9,7 @@ class Configurationsummaryd(Basepackage, GlobalSummary):
         GlobalSummary.__init__(self, request)
         self.fragment = __class__.__name__.lower()
         self.pk = pk
-        self.contenttitle = "Leeg"
+        self.contenttitle = "Project"
         self.level = request.GET.get('level', 0)
         # self.fragmenttype = "summary"
         self.render_templates = {
@@ -19,6 +19,10 @@ class Configurationsummaryd(Basepackage, GlobalSummary):
         }
 
         self.columnfields = {  # Fieldtypes are: boolean, char, date, applog, number, decimal, phone, sex, textarea, textarea_html, pill_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
+            "default_materials_customerid__relationname": {
+                "caption": "Standaard Leverancier uitgifte materiaal",
+                "fieldtype": "char",
+            },
         }
 
         self.record = Configuration.objects.filter(id=pk).values(*self.columnfields.keys(), 'id')[0]

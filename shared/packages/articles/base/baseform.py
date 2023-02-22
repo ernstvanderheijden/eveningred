@@ -1,4 +1,3 @@
-from articles import models_choices
 from master.models import Articlegroup, Vattype, Unittype
 
 modelname = "Article"

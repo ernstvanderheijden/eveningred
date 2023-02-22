@@ -19,6 +19,9 @@ class Configuration(models.Model):
     conditiontypeid = models.ForeignKey('master.Conditiontype', null=False, blank=False, on_delete=models.PROTECT, related_name='conditiontypeid_configuration')
     paymenttypeid = models.ForeignKey('master.Paymenttype', null=False, blank=False, on_delete=models.PROTECT, related_name='paymenttypeid_configuration')
 
+    default_materials_customerid = models.ForeignKey("relations.Relation", null=True, blank=True, on_delete=models.PROTECT, related_name='default_materials_customerid_configuration')
+    days_history = models.PositiveIntegerField(default=14, null=False, blank=False)
+
     email_display_name = models.CharField(max_length=50, default="Eveningred", null=False, blank=False)
     email_from = models.EmailField(max_length=100, default="noreply@bosschapp.nl", null=False, blank=False)
     email_reply_to = models.EmailField(max_length=100, default="info@bosschapp.nl", null=False, blank=False)

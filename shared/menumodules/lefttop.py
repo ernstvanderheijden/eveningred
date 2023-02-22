@@ -21,7 +21,23 @@ def set_moduledata(request):
         moduledata.append({
             "Projectbeheer": {
                 "url": "/core/template/?level=0&package=projects&chapter=list",
-                "icon": "bi bi-hammer",
+                "icon": "bi bi-house-door",
+            },
+        })
+
+    if request.user.has_perm('hours.view_project'):
+        moduledata.append({
+            "Mijn urenbeheer": {
+                "url": "/core/template/?level=0&package=hours&chapter=list",
+                "icon": "bi bi-stopwatch",
+            },
+        })
+
+    if request.user.has_perm('materials.view_project'):
+        moduledata.append({
+            "Mijn materiaalbeheer": {
+                "url": "/core/template/?level=0&package=materials&chapter=list",
+                "icon": "bi bi-boxes",
             },
         })
 

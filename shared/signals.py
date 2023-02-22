@@ -4,12 +4,14 @@ from core.middleware import local
 from django.db.models.signals import pre_save, post_save, pre_delete, post_delete
 from django.dispatch import receiver
 from emails.models import Email
+from hours.models import Hour
 from master.models import \
     Articlegroup, \
     Conditiontype, \
     Paymenttype, \
     Unittype, \
     Vattype
+from materials.models import Material
 from projects.models import Project
 from relations.models import Relation
 from shared.functions import update_address, get_fulladdress
@@ -54,6 +56,18 @@ def save_cre_and_upd_configuration(sender, instance, **kwargs):
 # Email
 @receiver(pre_save, sender=Email)
 def save_cre_and_upd_email(sender, instance, **kwargs):
+    update_instance(instance)
+
+
+# Hour
+@receiver(pre_save, sender=Hour)
+def save_cre_and_upd_hour(sender, instance, **kwargs):
+    update_instance(instance)
+
+
+# Material
+@receiver(pre_save, sender=Material)
+def save_cre_and_upd_material(sender, instance, **kwargs):
     update_instance(instance)
 
 

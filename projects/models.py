@@ -38,12 +38,26 @@ class Project(models.Model):
     @staticmethod
     def dependencies(pk):
         models_link_dictionary = {
-            # "model":
-            #     {
-            #         "package": 'packagename',
-            #         "model": 'Model',
-            #         "namefield": "fieldname",
-            #         # "extra_filter": {},
-            #     },
+            "Configuration":
+                {
+                    "package": 'configuration',
+                    "model": 'Configuration',
+                    "namefield": "default_materials_customerid",
+                    # "extra_filter": {},
+                },
+            "Hour":
+                {
+                    "package": 'hours',
+                    "model": 'Hour',
+                    "namefield": "projectid",
+                    # "extra_filter": {},
+                },
+            "Material":
+                {
+                    "package": 'materials',
+                    "model": 'Material',
+                    "namefield": "projectid",
+                    # "extra_filter": {},
+                },
         }
         return check_deny_del_or_upd(pk, models_link_dictionary)

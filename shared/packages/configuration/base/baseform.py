@@ -1,4 +1,5 @@
 from master.models import Paymenttype, Conditiontype
+from relations.models import Relation
 
 modelname = "Configuration"
 packagename = "configuration"
@@ -35,6 +36,10 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
         self.paymenttypeid = {
             "label": "Standaard betaalwijze",
             "choicelist": [(c.id, str(c.description)) for c in Paymenttype.objects.filter(status=0).order_by("description")],
+        }
+        self.default_materials_customerid = {
+            "label": "Standaard leverancier materiaaluitgifte",
+            "choicelist": [(c.id, str(c.relationname)) for c in Relation.objects.filter(status=0).order_by("relationname")],
         }
         self.email_to_accountancy = {
             "label": "Accountancy e-mailadres",
