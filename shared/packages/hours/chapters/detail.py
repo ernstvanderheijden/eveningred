@@ -17,7 +17,7 @@ class Detail(Basechapter):
         self.viewtype = viewtype
         self.level = request.GET.get('level', 0)
         self.tools = {}
-        if request.user.has_perm('hours.change_hours'):
+        if request.user.has_perm('hours.change_hour'):
             self.tools.update({
                 "update": {
                     "title": "fas fa-pen",
@@ -26,7 +26,7 @@ class Detail(Basechapter):
                     "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
                 }
             })
-        if request.user.has_perm('hours.delete_hours'):
+        if request.user.has_perm('hours.delete_hour'):
             self.tools.update({
                 "delete": {
                     "title": "fas fa-trash-alt",

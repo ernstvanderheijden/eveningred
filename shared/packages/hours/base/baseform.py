@@ -1,3 +1,5 @@
+import datetime
+
 from projects.models import Project
 from users.models import User
 
@@ -25,6 +27,7 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
             "class": "",
             "label": "Datum",
             "datepicker": True,
+            "initial": datetime.datetime.today().date,
         }
         self.description = {
             # "autofocus": "autofocus",
