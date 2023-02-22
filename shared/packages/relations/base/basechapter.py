@@ -12,12 +12,12 @@ class Basechapter(Basepackage):
         if pk:
             self.contenttitle = Relation.objects.get(id=pk).relationname
             self.chaptermenu = [
-                {
-                    "Detail": {
-                        "name_active_chapter": "detail",
-                        "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=detail&pk=" + str(pk),
-                    },
-                },
+                # {
+                #     "Detail": {
+                #         "name_active_chapter": "detail",
+                #         "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=detail&pk=" + str(pk),
+                #     },
+                # },
             ]
         else:
             self.chaptermenu = []

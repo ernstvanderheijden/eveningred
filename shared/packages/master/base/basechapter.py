@@ -17,6 +17,7 @@ class Basechapter(Basepackage):
                         {
                             "caption": "Artikelgroepen",
                             "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=listarticlegroup",
+                            "name_active_chapter": "articlegroup",
                         },
                         {
                             "caption": "Eenheden",

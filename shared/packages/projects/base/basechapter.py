@@ -12,18 +12,40 @@ class Basechapter(Basepackage):
         if pk:
             self.contenttitle = Project.objects.get(id=pk).description
             self.chaptermenu = [
-                {
-                    "Detail": {
-                        "name_active_chapter": "detail",
-                        "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=detail&pk=" + str(pk),
-                    },
-                },
-                {
-                    "Relaties": {
-                        "name_active_chapter": "relations",
-                        "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=relations&pk=" + str(pk),
-                    },
-                },
+                # {
+                #     "Detail": {
+                #         "name_active_chapter": "detail",
+                #         "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=detail&pk=" + str(pk),
+                #     },
+                # },
             ]
         else:
-            self.chaptermenu = []
+            if request.user.has_perm('projects.delete_prroject'):
+                self.chaptermenu = [
+                    {
+                        "Uren": {
+                            "chapterbuttontype": "menuitem",
+                            "names_active_button": ["listallhour", ],
+                            "menuitems": [
+                                {
+                                    "caption": "Alle registraties",
+                                    "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=listallhour",
+                                    "name_active_chapter": "allhour",
+                                },
+                            ],
+                        },
+                        "Materiaal": {
+                            "chapterbuttontype": "menuitem",
+                            "names_active_button": ["listallmaterial", ],
+                            "menuitems": [
+                                {
+                                    "caption": "Alle uitgiftes",
+                                    "chapterurl": "/core/template/?level=0&package=" + self.package + "&chapter=listallmaterial",
+                                    "name_active_chapter": "allmaterial",
+                                },
+                            ],
+                        },
+                    },
+                ]
+            else:
+                self.chaptermenu = []

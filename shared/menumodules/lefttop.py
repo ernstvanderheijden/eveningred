@@ -25,7 +25,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.has_perm('hours.view_project'):
+    if request.user.has_perm('hours.view_hour'):
         moduledata.append({
             "Mijn urenbeheer": {
                 "url": "/core/template/?level=0&package=hours&chapter=list",
@@ -33,7 +33,7 @@ def set_moduledata(request):
             },
         })
 
-    if request.user.has_perm('materials.view_project'):
+    if request.user.has_perm('materials.view_material'):
         moduledata.append({
             "Mijn materiaalbeheer": {
                 "url": "/core/template/?level=0&package=materials&chapter=list",
