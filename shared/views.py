@@ -2,11 +2,16 @@
 # from contracts.models import Contractline
 # from core.functions.render_fragments import fragmentdatabuilder
 # from core.globals.global_functions import clean_fields, decode_string
-# from django.contrib.auth.decorators import login_required
-# from django.http import JsonResponse, HttpResponse
-# from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from django.http import JsonResponse  #, HttpResponse
+from django.shortcuts import get_object_or_404  #, redirect
 # from django.template.loader import render_to_string
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
+
+from users.models import User
+
+
 # from invoices.models import Invoiceline, Invoice
 # from pikepdf import Pdf
 # from shared.api import get_mollie_payment
@@ -15,8 +20,28 @@
 # from shared.master import save_master_blueprinttext
 # from shared.pdf import get_ctx_pdf_invoice, create_pdf_from_ctx, download_or_open_pdf, get_ctx_pdf_contract
 # from shared.utilityusage import save_utilityusages_batch
-#
-#
+
+
+@csrf_exempt
+@login_required
+def save_right(request, pk):
+    data = dict()
+    # record = dict()
+    # checked = request.POST.get('key')
+
+    userid = request.GET.get('userid', '')
+    if userid:
+        user = User.objects.get(id=userid)
+        group = Group.objects.get(id=pk)
+        if user.groups.filter(id=pk).exists():  # Is the user in the group
+            user.groups.remove(group)  # Add the user to the Author group
+        else:
+            user.groups.add(group)  # Add the user to the Author group
+    data['messagelist'] = ["Item opgeslagen", "success", "short"]  # messagelist: 0='message', 1='color', 2='short or long', 3='ajax or http', 4='link', 5='linkdescription'
+    data['form_is_valid'] = True
+    return JsonResponse(data)
+
+
 # def move_item(request):
 #     data = dict()
 #     rec_moving = ''

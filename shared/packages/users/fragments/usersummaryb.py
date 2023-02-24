@@ -34,7 +34,7 @@ class UsersummaryB(Basepackage, GlobalSummary):
             self.usergroups.append(user_group.id)
         print("PLOK Groepen", self.usergroups)
 
-        self.groups = Group.objects.all().order_by('name')
+        self.groups = Group.objects.filter().exclude(name__startswith='X_').order_by('name')
         self.extra_template = "core/user/rights.html"
 
         # permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()

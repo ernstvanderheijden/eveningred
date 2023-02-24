@@ -6,6 +6,7 @@ from shared.actions import action
 app_name = "shared"
 
 urlpatterns = [
+    path('action/save_right/<int:pk>/', views.save_right, name='save_right'),
     # path('action/move_item/', views.move_item, name='move_up'),
 
     # path('action/actions/', action.actions, name='actions'),

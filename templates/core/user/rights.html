@@ -1,12 +1,20 @@
 <h6>Rechten</h6>
-<table class="table table-sm{% if ctx.disabled %} text-dark text-opacity-25{% endif %}">
+<table class="table table-sm{% if ctx.disabled %} text-dark text-opacity-25{% endif %} table-hover">
     <tbody>
     {% for group in ctx.groups %}
-        <tr>
-            {% if group.id in ctx.usergroups %}
-            {% else %}
-                <td>{{ group.name }} {{ group.id }}</td><td>No {{ ctx.usergroups }}</td>
-            {% endif %}
+        <tr class="cursor-pointer">
+            <td>
+                {{ group.name }}
+            </td>
+            <td>
+                <input
+                        class="low_height"
+                        type="checkbox"
+                        id='{{ ctx.level }}_id_checkbox_group_{{ groupid }}'
+                        onclick="do_url('{{ ctx.fragment }}','{{ ctx.level }}','/shared/action/save_right/{{ group.id }}/?level=0&userid={{ record.id }}')"
+                        {% if group.id in ctx.usergroups %}checked{% endif %}
+                >
+            </td>
         </tr>
     {% endfor %}
     </tbody>

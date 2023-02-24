@@ -23,6 +23,9 @@ body {
 input {
     height: 35px;
 }
+input.low_height {
+    height: 20px;
+}
 
 li {
     /*cursor: pointer;*/
