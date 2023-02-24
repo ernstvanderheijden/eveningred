@@ -26,9 +26,6 @@ from users.models import User
 @login_required
 def save_right(request, pk):
     data = dict()
-    # record = dict()
-    # checked = request.POST.get('key')
-
     userid = request.GET.get('userid', '')
     if userid:
         user = User.objects.get(id=userid)
