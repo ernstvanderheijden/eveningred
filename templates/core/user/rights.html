@@ -1,0 +1,13 @@
+<h6>Rechten</h6>
+<table class="table table-sm{% if ctx.disabled %} text-dark text-opacity-25{% endif %}">
+    <tbody>
+    {% for group in ctx.groups %}
+        <tr>
+            {% if group.id in ctx.usergroups %}
+            {% else %}
+                <td>{{ group.name }} {{ group.id }}</td><td>No {{ ctx.usergroups }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

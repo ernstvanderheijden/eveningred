@@ -26,10 +26,6 @@ class UserAccessMixin(PermissionRequiredMixin):
                 return JsonResponse(data)
             else:
                 return redirect('/403/')
-
-        # permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
-        # for p in permissions:
-        #     print("permissions", p, request.user)
         return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
 
 

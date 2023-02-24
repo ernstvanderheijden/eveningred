@@ -27,6 +27,12 @@ class Project(models.Model):
 
     class Meta:
         ordering = ["description"]
+        permissions = [
+            (
+                "process_administration",
+                "Can process project"
+            )
+        ]
 
     def __str__(self):
         return self.description

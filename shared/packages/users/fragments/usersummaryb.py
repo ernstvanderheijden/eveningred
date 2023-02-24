@@ -1,5 +1,8 @@
-from core.globals.global_fragments import GlobalSummary
+from django.db.models import Q
+
 from ..base.basepackage import Basepackage
+from core.globals.global_fragments import GlobalSummary
+from django.contrib.auth.models import Permission, Group
 from users.models import User
 
 
@@ -21,3 +24,27 @@ class UsersummaryB(Basepackage, GlobalSummary):
             },
         }
         self.record = User.objects.filter(id=pk).values(*self.columnfields.keys(), 'id',)[0]
+        user = User.objects.get(id=pk)
+        # Permissions examples
+
+        # Set user_groups in a list
+        self.usergroups = list()
+        user_groups = user.groups.all()
+        for user_group in user_groups:
+            self.usergroups.append(user_group.id)
+        print("PLOK Groepen", self.usergroups)
+
+        self.groups = Group.objects.all().order_by('name')
+        self.extra_template = "core/user/rights.html"
+
+        # permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
+        # for p in permissions:
+        #     print("permissions", p, request.user)
+
+        # project_process = Group.objects.get(name='Projects_process')
+        # request.user.groups.add(project_process)  # Add the user to the Author group
+
+        # if request.user.has_perm('projects.process_project'):
+        #     print("PLOK process YES")
+        # else:
+        #     print("PLOK process NO")
