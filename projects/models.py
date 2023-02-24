@@ -29,7 +29,7 @@ class Project(models.Model):
         ordering = ["description"]
         permissions = [
             (
-                "process_administration",
+                "process_project",
                 "Can process project"
             )
         ]

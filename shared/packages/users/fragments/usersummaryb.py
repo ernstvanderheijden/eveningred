@@ -37,12 +37,11 @@ class UsersummaryB(Basepackage, GlobalSummary):
         self.groups = Group.objects.filter().exclude(name__startswith='X_').order_by('name')
         self.extra_template = "core/user/rights.html"
 
-        # permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
-        # for p in permissions:
-        #     print("permissions", p, request.user)
-
-        # project_process = Group.objects.get(name='Projects_process')
-        # request.user.groups.add(project_process)  # Add the user to the Author group
+        permissions = Permission.objects.filter(Q(user=request.user) | Q(group__user=request.user)).all()
+        for p in permissions:
+            print("permissions", p, request.user)
+        project_process = Group.objects.get(name='Projecten_verwerken')
+        request.user.groups.add(project_process)  # Add the user to the Author group
 
         # if request.user.has_perm('projects.process_project'):
         #     print("PLOK process YES")

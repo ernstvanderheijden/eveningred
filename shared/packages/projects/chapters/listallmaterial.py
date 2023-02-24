@@ -13,7 +13,7 @@ class Listallmaterial(Basechapter):
         self.level = request.GET.get('level', 0)
         self.tools = {}
 
-        if request.user.has_perm('projects.delete_prroject'):
+        if request.user.has_perm('projects.process_project'):
             self.fragments = [
                 {
                     fragmentname1: {

@@ -34,6 +34,10 @@ def save_right(request, pk):
         user = User.objects.get(id=userid)
         group = Group.objects.get(id=pk)
         if user.groups.filter(id=pk).exists():  # Is the user in the group
+            if group.name == 'Gebruikers_manage' and user.id == request.user.id:
+                data['messagelist'] = ["Niet mogelijk, ververs scherm", "danger", "long"]  # messagelist: 0='message', 1='color', 2='short or long', 3='ajax or http', 4='link', 5='linkdescription'
+                data['form_is_valid'] = False
+                return JsonResponse(data)
             user.groups.remove(group)  # Add the user to the Author group
         else:
             user.groups.add(group)  # Add the user to the Author group
