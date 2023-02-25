@@ -22,7 +22,7 @@ class Unittypelist(GlobalList):
                 'create': {
                     "title": "fas fa-plus",
                     "tooltype": "create",
-                    "class": "btn btn-primary",
+                    "class": "btn btn-success",
                     "url": "/core/create/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crudunittype&fk=&nameform=" + nameform + "&successurl=" + encode_string(self.successurl_decoded)
                 },
             })
