@@ -19,7 +19,7 @@ class Detail(Basechapter):
         self.viewtype = viewtype
         self.level = request.GET.get('level', 0)
         self.tools = {}
-        if request.user.has_perm('articles.change_articles'):
+        if request.user.has_perm('articles.change_article'):
             self.tools.update({
                 "update": {
                     "title": "fas fa-pen",
@@ -28,7 +28,7 @@ class Detail(Basechapter):
                     "url": "/core/update/" + str(self.pk) + "/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&nameform=" + nameform + "&pk=" + str(self.pk) + "&successurl=" + encode_string("/core/template/?level=" + self.level + "&package=" + self.package + "&chapter=" + return_to_detail + "&pk=" + str(self.pk))
                 }
             })
-        if request.user.has_perm('articles.delete_articles'):
+        if request.user.has_perm('articles.delete_article'):
             self.tools.update({
                 "delete": {
                     "title": "fas fa-trash-alt",

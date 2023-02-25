@@ -1,8 +1,6 @@
 from core.globals.global_functions import is_ajax_request
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.models import Permission
 from django.contrib.auth.views import redirect_to_login
-from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect
 
@@ -81,8 +79,8 @@ def get_modelname(package, chapter):
         modelname = 'dashboard'
     elif package == 'applog':
         modelname = 'applog'
-    elif package == 'article':
-        modelname = 'dashboard'
+    # elif package == 'article':
+    #     modelname = 'dashboard'
     elif package == 'configuration':
         modelname = 'configuration'
     elif package == 'master':
