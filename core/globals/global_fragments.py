@@ -59,7 +59,7 @@ class GlobalGrid:
             self.startdate = self.today - timedelta(days=self.days_in_front + weekday)
             self.searchdate = self.today
 
-        self.enddate = self.searchdate + timedelta(days=(7 * self.weeks))
+        self.enddate = self.searchdate + timedelta(days=(7 * self.weeks) - weekday - 1)
         self.columndates = date_range_dictionary(self.startdate, self.enddate)
 
         self.render_templates = {

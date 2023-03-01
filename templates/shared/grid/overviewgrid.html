@@ -1,0 +1,82 @@
+{#https://stackoverflow.com/questions/2385332/highlight-dates-in-specific-range-with-jquerys-datepicker#}
+<div class="container-fluid h-100 p-0 border bg-white rounded-6 shadow-sm">
+    <div class="row">
+        <div class="col">
+            <nav class="navbar shadow-1 bg-light bg-gradient rounded-bottom rounded-6">
+                <div class="col-auto me-auto ps-3">
+                    {% if ctx.level == '0' %}
+                        <h6 id="{{ ctx.level }}_title" class="mt-2">{{ ctx.contenttitle }}</h6>
+                    {% endif %}
+                </div>
+                <div class="col-auto pe-3">
+                    {% include 'core/tools/tools.html' %}
+                </div>
+            </nav>
+            <nav>
+                <div class="container_fluid">
+                    <div class="row align-items-center g-0">
+                        <div class="col-2 ms-3">
+{#                            <label>#}
+{#                                <select#}
+{#                                        name="status"#}
+{#                                        class="select"#}
+{#                                        id="id_estatetype"#}
+{#                                        onchange="do_refresh_grid('{{ ctx.fragment }}', '{{ ctx.level }}', '/core/fragment/?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk=&fragmentrefresh=data_{{ ctx.fragment }}&refreshtarget=data')"#}
+{#                                >#}
+{#                                    <option value="" {% if not ctx.estatetype %}selected=""{% endif %}>Alle types</option>#}
+{#                                    {% for estatetype in ctx.estatetypes %}#}
+{#                                        <option value="{{ estatetype.id }}" {% if ctx.estatetype == estatetype.id %}selected=""{% endif %}>{{ estatetype.description }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </label>#}
+                        </div>
+
+                        <div class="col-2 mt-1">
+                            <label>
+                                <input
+                                        id="id_searchdate"
+                                        class="form-control"
+                                        onchange="do_refresh_grid('{{ ctx.fragment }}', '{{ ctx.level }}', '/core/fragment/?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk=&fragmentrefresh=data_{{ ctx.fragment }}&refreshtarget=data')"
+                                        type="date"
+                                        name="searchdate"
+                                        value="{{ ctx.searchdate|date:"Y-m-d" }}">
+                            </label>
+                        </div>
+
+                        <div class="col-2 mt-3">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a id="id_move_minday"
+                                       class="page-link"
+                                       onclick="move_columns(-14, '{{ ctx.fragment }}', '{{ ctx.level }}', '/core/fragment/?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk=&fragmentrefresh=data_{{ ctx.fragment }}&refreshtarget=data')"
+                                       aria-label="Previous"
+                                    ><span aria-hidden="true">⟨</span></a>
+                                </li>
+                                <li class="page-item">
+                                    <a id="id_move_today"
+                                       class="page-link"
+                                       onclick="move_columns(0, '{{ ctx.fragment }}', '{{ ctx.level }}', '/core/fragment/?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk=&fragmentrefresh=data_{{ ctx.fragment }}&refreshtarget=data')"
+                                       aria-label="Today"
+                                    ><span aria-hidden="true">vandaag</span></a>
+                                </li>
+                                <li class="page-item">
+                                    <a id="id_move_plusday"
+                                       class="page-link"
+                                       onclick="move_columns(14, '{{ ctx.fragment }}', '{{ ctx.level }}', '/core/fragment/?level={{ ctx.level }}&package={{ ctx.package }}&fragment={{ ctx.fragment }}&pk=&fragmentrefresh=data_{{ ctx.fragment }}&refreshtarget=data')"
+                                       aria-label="Next"
+                                    ><span aria-hidden="true">⟩</span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+            <div class="bookinggrid_wrapper ms-3 me-3 pb-4 overflow-auto">
+                <table id="{{ ctx.level }}_data_{{ ctx.fragment }}" class="table table-light bookinggrid table-hover">
+                    {{ ctx.grid_inner_html }}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

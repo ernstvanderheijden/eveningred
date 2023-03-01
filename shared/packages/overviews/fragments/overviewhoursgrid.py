@@ -15,7 +15,7 @@ class Overviewhoursgrid(GlobalGrid):
         self.clickevent = 'detail'  # Action @ click on row (detail, update, selectsingle, selectmultiple)
         self.order_by = ""
         self.paginate = False
-        self.estatelist = dict_hourgrid(self)  # the scheduledata for estates
+        self.hourgrid = dict_hourgrid(self)  # the scheduledata for estates
         self.records = {}
         self.successurl_decoded = "/core/fragment/?level=" + self.level + "&package=" + self.package + "&fragment=" + self.fragment + "&pk=" + str(self.pk) + "&searchdate=" + format(self.searchdate, "%Y-%m-%d") + "&fragmentrefresh=data_" + self.fragment + "&refreshtarget=data&page=1"
         self.onclick = ""

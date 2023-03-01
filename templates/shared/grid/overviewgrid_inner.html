@@ -1,0 +1,67 @@
+<thead>
+{# DatesRow #}
+<tr role="row">
+    <th class="bg-white outline-0"></th>
+    {% for cdate, cdata in ctx.columndates.items %}
+
+        {% if forloop.first and cdata.startday != 1 %}
+            <th colspan="{{ 8|subtract:cdata.startday }}" class="align-bottom p-2 text-center fw-lighter small bg-white text-nowrap text-truncate text-start">
+                <span class="">{{ cdata.listdate|date:'F'|title }} - Week {{ cdata.week }}</span>
+            </th>
+        {% elif cdata.weekday == 1 %}
+            <th colspan="7" class="align-bottom p-2 text-center fw-lighter small bg-white text-nowrap text-truncate text-start">
+                <span class="">{{ cdata.listdate|date:'F'|title }} - Week {{ cdata.week }}</span>
+            </th>
+        {% endif %}
+
+    {% endfor %}
+</tr>
+
+<tr>
+    <th class="outline-0"></th>
+    {% for cdate, cdata in ctx.columndates.items %}
+        <th class="align-bottom p-2 text-center fw-lighter small dayofweek_{{ cdata.weekday }}">
+            <span>{{ cdata.dd }} {{ cdata.day }}</span>
+        </th>
+    {% endfor %}
+</tr>
+</thead>
+
+{# Objects and there availability, bookings and maintenance #}
+{% for hourid, hourdata in ctx.hourgrid.items %}
+    <tr role="row">
+        <td class="p-2 fs-7 fw-light estateitem text-nowrap cursor-pointer"
+            onclick="window.open('/core/template/?level={{ ctx.level }}&package=users&chapter=detail&pk={{ hourid }}', '_parent')"
+        >
+            <span>{{ hourdata.fullname }} - {{ hourdata.mobile|default_if_none:'Mobiel onbekend' }}</span>
+        </td>
+        {% for hdate, hdata in hourdata.columndata.items %}
+            <td class="p-0 dayofweek_{{ hdata.columndatas.weekday }}">
+                <div class="container-fluid p-0">
+                    <div class="row g-0 align-items-center rentalgridcolumn">
+                        <div class="col order-0">
+                            <div class="container-fluid p-0">
+                                <div class="row g-0">
+                                    {% for hid, hiddata in hdata.items %}
+                                        <div class="row"
+                                             onclick="window.open('/core/template/?level={{ ctx.level }}&package=estates&chapter=listinmaintenance&pk={{ hourid }}', '_parent')"
+                                        >
+                                            <div class="col">
+                                                <div class="container-fluid p-0">
+                                                    <div id="row{{ hid }}" class="" style="height: 50px">
+                                                        {{ hiddata.userid_hour__projectid__description }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        {% endfor %}
+    </tr>
+
+{% endfor %}
