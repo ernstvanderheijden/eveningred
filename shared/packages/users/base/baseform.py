@@ -17,6 +17,10 @@ class Baseform:  # Baseform can not inherit from basepackage. Every declared var
             "label": "E-mail",
             "required": True,
         }
+        self.mobile = {
+            "label": "Mobiel",
+            "required": True,
+        }
         self.relationid = {
             "label": "Relatie",
             "required": False,

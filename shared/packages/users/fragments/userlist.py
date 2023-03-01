@@ -37,6 +37,11 @@ class Userlist(GlobalList):
                 "fieldtype": "char",
                 "operator": "__icontains",
             },
+            "mobile": {
+                "caption": "Mobiel",
+                "fieldtype": "link",
+                "operator": "__icontains",
+            },
             "email": {
                 "caption": "E-mail",
                 "fieldtype": "link",

@@ -19,6 +19,10 @@ class UsersummaryA(Basepackage, GlobalSummary):
                 "caption": "Achternaam",
                 "fieldtype": "number",
             },
+            "mobile": {
+                "caption": "Mobiel",
+                "fieldtype": "char",
+            },
             "email": {
                 "caption": "E-mail",
                 "fieldtype": "char",

@@ -49,13 +49,14 @@ class GlobalGrid:
         self.fragmenttype = "grid"
 
         self.today = datetime.today().date()
-        self.weeks = request.GET.get('weeks', 4)
+        self.weeks = request.GET.get('weeks', 2)
         self.days_in_front = configuration.days_in_front
+        weekday = datetime.today().weekday() + 1
         if request.GET.get('searchdate', ''):
             self.searchdate = datetime.strptime(request.GET.get('searchdate'), "%Y-%m-%d").date()
             self.startdate = datetime.strptime(request.GET.get('searchdate'), "%Y-%m-%d").date() - timedelta(days=self.days_in_front)
         else:
-            self.startdate = self.today - timedelta(days=self.days_in_front)
+            self.startdate = self.today - timedelta(days=self.days_in_front + weekday)
             self.searchdate = self.today
 
         self.enddate = self.searchdate + timedelta(days=(7 * self.weeks))
@@ -63,8 +64,8 @@ class GlobalGrid:
 
         self.render_templates = {
             "refreshtarget": "fragment",
-            "grid_inner_html": "shared/grid/rentalgrid_inner.html",
-            "grid_html": "shared/grid/rentalgrid.html",
+            "grid_inner_html": "shared/grid/overviewgrid_inner.html",
+            "grid_html": "shared/grid/overviewgrid.html",
         }
 
 

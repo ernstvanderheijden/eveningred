@@ -41,6 +41,14 @@ def set_moduledata(request):
             },
         })
 
+    if request.user.has_perm('projects.process_project'):
+        moduledata.append({
+            "Overzichten": {
+                "url": "/core/template/?level=0&package=overviews&chapter=overviewhours",
+                "icon": "bi bi-calendar4-range",
+            },
+        })
+
     if request.user.has_perm('articles.view_article'):
         moduledata.append({
             "Artikelbeheer": {

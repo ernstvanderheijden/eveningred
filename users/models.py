@@ -13,6 +13,7 @@ class User(AbstractUser):
     fullname = models.CharField(blank=True, null=True, max_length=100)
     insertion = models.CharField(blank=True, null=True, max_length=10)
     email = models.EmailField(null=False, blank=False, max_length=100, unique=True)
+    mobile = models.CharField(blank=True, null=True, max_length=15)
     is_owner = models.BooleanField(default=False, blank=False)
     paginatesize = models.IntegerField(default=25, null=True)
     status = models.IntegerField(default=0, choices=STATUS_CHOICES, null=False, blank=False)
