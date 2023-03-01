@@ -20,7 +20,6 @@ class Basechapter(Basepackage):
                 # },
             ]
         else:
-            print("PLOK", request.user.has_perm('projects.process_project'))
             if request.user.has_perm('projects.process_project'):
                 self.chaptermenu = [
                     {
