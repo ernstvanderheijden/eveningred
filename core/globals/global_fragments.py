@@ -51,11 +51,12 @@ class GlobalGrid:
         self.today = datetime.today().date()
         self.weeks = request.GET.get('weeks', 2)
         self.days_in_front = configuration.days_in_front
-        weekday = datetime.today().weekday()
         if request.GET.get('searchdate', ''):
             self.searchdate = datetime.strptime(request.GET.get('searchdate'), "%Y-%m-%d").date()
+            weekday = self.searchdate.weekday()
             self.startdate = datetime.strptime(request.GET.get('searchdate'), "%Y-%m-%d").date() - timedelta(days=self.days_in_front + weekday)
         else:
+            weekday = datetime.today().weekday()
             self.startdate = self.today - timedelta(days=self.days_in_front + weekday)
             self.searchdate = self.today
         self.enddate = self.searchdate + timedelta(days=(7 * self.weeks) - weekday - 1)
