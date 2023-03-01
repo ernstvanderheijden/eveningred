@@ -6,6 +6,36 @@ from users.models import User
 
 
 def dict_hourgrid(self):
+    allusers = User.objects.filter(is_active=True)
+    allusers = allusers.values(
+        'id',
+        'fullname',
+        "mobile",
+        'email',
+        'userid_hour__id',
+        'userid_hour__issuedate',
+        'userid_hour__projectid_id',
+        'userid_hour__projectid__description',
+        'userid_hour__description',
+        'userid_hour__amounthours',
+    )
+
+    dict_users = dict()
+    for user in allusers:
+        # Fill the columndata with the dates from the range
+        if user['id'] not in dict_users:
+            dict_users.update({user['id']: {
+                "id": user['id'],
+                "fullname": user['fullname'],
+                "mobile": user['mobile'],
+                "email": user['email'],
+                "columndata": {}
+            }})
+        for columndate, columndatas in self.columndates.items():
+            dict_users[user['id']]['columndata'].update({columndate: {}})
+            print("PLOK 2", dict_users)
+    print("PLOK", dict_users)
+
     users = User.objects.filter(is_active=True)
     users = users.filter(userid_hour__issuedate__gte=self.startdate, userid_hour__issuedate__lte=self.enddate)
     users = users.values(
@@ -22,21 +52,7 @@ def dict_hourgrid(self):
     )
     users = users.order_by("fullname")
 
-    dict_users = dict()
     for user in users:
-        if user['id'] not in dict_users:
-            dict_users.update({user['id']: {
-                "id": user['id'],
-                "fullname": user['fullname'],
-                "mobile": user['mobile'],
-                "email": user['email'],
-                "columndata": {}
-            }})
-
-        # Fill the columndata with the dates from the range
-        if not dict_users[user['id']]['columndata']:
-            for columndate, columndatas in self.columndates.items():
-                dict_users[user['id']]['columndata'].update({columndate: {}})
         dict_users[user['id']]['columndata'][format(user['userid_hour__issuedate'], "%d-%m-%Y")].update({
             user['userid_hour__id']: {
                 "userid_hour__issuedate": user['userid_hour__issuedate'],

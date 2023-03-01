@@ -63,9 +63,9 @@ function getQueryString(url, argument) {
 
 function do_refresh_grid(fragment, level, url) {
     // Collect filters
-    if ($("#id_estatetype").length > 0) {
-        url = url + '&estatetype=' + document.getElementById('id_estatetype').value + '&searchdate=' + document.getElementById('id_searchdate').value
-    }
+    // if ($("#id_estatetype").length > 0) {
+        url = url + '&searchdate=' + document.getElementById('id_searchdate').value
+    // }
     refresh_content(fragment, level, url);
 }
 
