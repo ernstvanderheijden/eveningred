@@ -147,6 +147,16 @@ class GlobalUpdate(PrivateBase, UpdateView):
             return JsonResponse(data)
 
     def form_valid(self, form, **kwargs):  # Do stuff with the content before saving the form
+        try:
+            if self.ctx['deny_del_or_upd']:
+                self.data['form_is_valid'] = False
+                self.data = dict()
+                return JsonResponse(self.data)
+        except ProtectedError:
+            self.data['form_is_valid'] = False
+            self.data = dict()
+            return JsonResponse(self.data)
+
         record = form.save()
         if self.request.GET.get('passwordform', '') == 'true':
             update_session_auth_hash(self.request, form.user)

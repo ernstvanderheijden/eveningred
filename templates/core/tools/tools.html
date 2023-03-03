@@ -62,6 +62,25 @@
                         </button>
                     </div>
 
+                {% elif tooldata.tooltype == 'update' and ctx.deny_del_or_upd %}  {# Disabled button delete with popover #}
+                    <div class="ms-2">
+                        <span class="d-inline-block"
+                              data-mdb-toggle="popover"
+                              data-mdb-trigger="hover focus"
+                              data-mdb-placement="bottom"
+                              data-mdb-content="Wijzigen niet mogelijk"
+                        >
+                            <button role="button"
+                                    id="{{ tooldata.id }}"
+                                    class="btn btn-sm btn-dark"
+                                    onclick=""
+                                    disabled
+                            >
+                                <i class="{{ tooldata.title }} text-white"></i>
+                            </button>
+                        </span>
+                    </div>
+
                 {% elif tooldata.tooltype == 'delete' and ctx.deny_del_or_upd %}  {# Disabled button delete with popover #}
                     <div class="ms-2">
                         <span class="d-inline-block"

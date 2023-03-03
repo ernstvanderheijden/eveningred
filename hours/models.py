@@ -22,6 +22,10 @@ class Hour(models.Model):
 
     @staticmethod
     def dependencies(pk):
+        if pk:
+            hour = Hour.objects.get(id=pk)
+            if hour.processdate:
+                return True
         models_link_dictionary = {
             # "model":
             #     {

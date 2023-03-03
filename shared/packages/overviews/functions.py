@@ -51,6 +51,7 @@ def dict_hourgrid(self):
         'userid_hour__projectid__description',
         'userid_hour__description',
         'userid_hour__amounthours',
+        'userid_hour__processdate',
     )
     users = users.order_by("fullname")
 
@@ -62,7 +63,7 @@ def dict_hourgrid(self):
                 "userid_hour__projectid__description": user['userid_hour__projectid__description'],
                 "userid_hour__description": user['userid_hour__description'],
                 "userid_hour__amounthours": user['userid_hour__amounthours'],
+                "userid_hour__processdate": user['userid_hour__processdate'],
             },
         })
-    print("PLOK", dict_users)
     return dict_users
