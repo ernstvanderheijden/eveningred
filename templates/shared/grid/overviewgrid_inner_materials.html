@@ -1,0 +1,93 @@
+<table id="{{ ctx.level }}_data_{{ ctx.fragment }}" class="table overviewgrid ">
+    <thead>
+    {# DatesRow #}
+    <tr>
+        <th class="bg-white outline-0"></th>
+        {% for cdate, cdata in ctx.columndates.items %}
+
+            {% if forloop.first and cdata.startday != 1 %}
+                <th colspan="{{ 8|subtract:cdata.startday }}" class="align-bottom p-2 text-center fw-lighter small bg-white text-nowrap text-truncate text-start">
+                    <span class="">{{ cdata.listdate|date:'F'|title }} - Week {{ cdata.week }}</span>
+                </th>
+            {% elif cdata.weekday == 1 %}
+                <th colspan="7" class="align-bottom p-2 text-center fw-lighter small bg-white text-nowrap text-truncate text-start">
+                    <span class="">{{ cdata.listdate|date:'F'|title }} - Week {{ cdata.week }}</span>
+                </th>
+            {% endif %}
+
+        {% endfor %}
+    </tr>
+
+    <tr>
+        <th class="outline-0"></th>
+        {% for cdate, cdata in ctx.columndates.items %}
+            <th class="align-bottom p-2 text-center fw-lighter small dayofweek_{{ cdata.weekday }}">
+                <span>{{ cdata.dd }} {{ cdata.day }}</span>
+            </th>
+        {% endfor %}
+    </tr>
+    </thead>
+
+    {# Objects and there availability, bookings and maintenance #}
+    {% for materialid, materialdata in ctx.materialgrid.items %}
+        <tr>
+            <td class="p-1 fs-8 fw-light text-nowrap" {# cursor-pointer #}>
+                <span>
+                    {% if materialdata.fullname %}
+                        <a href="/core/template/?level={{ ctx.level }}&package=users&chapter=detail&pk={{ materialid }}" target="_parent">{{ materialdata.fullname }}</a>
+                    {% endif %}
+                    {% if materialdata.mobile %}
+                        <br><a href="tel:{{ materialdata.mobile }}">{{ materialdata.mobile }}</a>
+                    {% endif %}
+                </span>
+            </td>
+            {% for hdate, hdata in materialdata.columndata.items %}
+                <td class="p-0 dayofweek_{{ hdata.columndatas.weekday }} {% if hdata.columndatas.weekday %}{% endif %}">
+                    <div>
+                        {% for hid, hiddata in hdata.items %}
+                            {% if hiddata.userid_material__projectid_id %}
+                                <div
+                                        id="id_material_{{ hid }}"
+                                        class="overviewcard m-1 p-1 rounded-2 fs-9"
+                                        {% if hiddata.userid_material__processdate %}
+                                            onclick=""
+                                        {% else %}
+                                            onclick="do_url('0_overviewmaterialsgrid', '{{ ctx.level|level_higher }}','/core/update/{{ hid }}/?level={{ ctx.level|level_higher }}&package=materials&crud=crud&nameform=materialform&pk={{ hid }}&successurl={{ ctx.successurl }}')"
+                                        {% endif %}
+                                >
+                                    <div class="overviewcardtext fs-10">{{ hiddata.userid_material__projectid__description }}</div>
+                                    <div class="overviewcardtext fs-10">{{ hiddata.userid_material__description }}</div>
+                                    <div class="overviewcardtext fs-9">Aantal: {{ hiddata.userid_material__amountmaterials }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+{#                    <div class="container-fluid p-0" style="overflow: visible;">#}
+{#                        <div class="row g-0 align-items-center rentalgridcolumn">#}
+{#                            <div class="col order-0">#}
+{#                                <div class="container-fluid p-0">#}
+{#                                    <div class="row g-0">#}
+{#                                        {% for hid, hiddata in hdata.items %}#}
+{#                                            <div class="row"#}
+{#                                                 onclick="window.open('/core/template/?level={{ ctx.level }}&package=estates&chapter=listinmaintenance&pk={{ materialid }}', '_parent')"#}
+{#                                            >#}
+{#                                                <div class="col">#}
+{#                                                    <div class="container-fluid p-0">#}
+{#                                                        <div id="row{{ hid }}" class="" style="background-color: #00bcd4; margin: 2px;">#}
+{#                                                            {{ hiddata.userid_material__projectid__description }}#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        {% endfor %}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
