@@ -659,6 +659,48 @@ td.dayofweek_7 {
     border-color: var(--default-warning);
 }
 
+.overviewgrid {
+    width: 100%;
+}
+
+.overviewgrid tbody tr > :first-child {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background: #FBFBFB;
+}
+
+.overviewgrid * th {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    min-width: 60px;
+    max-width: 80px;
+    background: #f3f3f3;
+    outline: 0.5px solid #e7e7e7;
+}
+
+.overviewgrid * td {
+    outline: 0.5px solid #e7e7e7;
+}
+
+.overviewgrid thead tr > :first-child {
+    left: 0;
+    top: 0;
+    z-index: 5;
+}
+
+.overviewcard {
+    background-color: #dfe7f6;
+    cursor: pointer;
+}
+
+.overviewcardtext {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 80px;
+    white-space: nowrap;
+}
 
 /* Popovers */
 /*==============================================================================*/

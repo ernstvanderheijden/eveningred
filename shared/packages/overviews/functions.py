@@ -32,7 +32,11 @@ def dict_hourgrid(self):
                 "columndata": {}
             }})
         for columndate, columndatas in self.columndates.items():
-            dict_users[user['id']]['columndata'].update({columndate: {}})
+            dict_users[user['id']]['columndata'].update({
+                columndate: {
+                    "columndatas": columndatas,
+                }
+            })
 
     users = User.objects.filter(is_active=True)
     users = users.filter(userid_hour__issuedate__gte=self.startdate, userid_hour__issuedate__lte=self.enddate)
@@ -60,4 +64,5 @@ def dict_hourgrid(self):
                 "userid_hour__amounthours": user['userid_hour__amounthours'],
             },
         })
+    print("PLOK", dict_users)
     return dict_users
