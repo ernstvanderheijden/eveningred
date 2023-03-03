@@ -60,6 +60,10 @@ def set_required_permissions(request):
         permission_required = 'auth.view_permission'
     elif package == 'users' and chapter == 'myprofile':
         permission_required = 'auth.view_permission'
+    elif package == 'overviews' and chapter == 'overviewhours':
+        permission_required = 'projects.process_project'
+    elif package == 'overviews' and chapter == 'overviewmaterials':
+        permission_required = 'projects.process_project'
     elif package == 'users' and nameform == 'userprofileform':
         permission_required = 'auth.view_permission'
     # elif not crudtype:
