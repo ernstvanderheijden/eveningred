@@ -12,22 +12,24 @@ class Allhourlist(GlobalList):
         self.contenttitle = 'Alle urenregistraties'
         self.fragment = __class__.__name__.lower()
         self.fragmentrefresh = __class__.__name__.lower()
-        self.clickevent = 'detail'  # Action @ click on row (detail, update, selectsingle, selectmultiple)
+        self.clickevent = 'selectmultiple'  # Action @ click on row (detail, update, selectsingle, selectmultiple)
         self.order_by = "-issuedate"
         self.paginatesize_overwrite = ''
         self.successurl_decoded = "/core/fragment/?level=" + self.level + "&package=" + self.package + "&fragment=" + self.fragment + "&pk=" + str(self.pk) + "&fragmentrefresh=data_" + self.fragment + "&refreshtarget=data&page=1"
         self.onclick = "do_url('" + self.fragment + "', " + str(int(self.level) + 1) + ", '/core/update/pk_replace/?level=" + str(int(self.level) + 1) + "&package=hours&crud=" + crudname + \
                        "&fk=&pk=pk_replace&nameform=" + nameform + "&successurl=" + encode_string(self.successurl_decoded) + "')"
-        if request.user.has_perm('master.add_articlegroup'):
+        if request.user.has_perm('projects.process_project'):
             self.tools.update({
-                'create': {
-                    "title": "fas fa-plus",
-                    "tooltype": "create",
-                    "class": "btn btn-success",
-                    "url": "/core/create/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=crud&fk=&nameform=" + nameform + "&successurl=" + encode_string(
-                        self.successurl_decoded)
+                'execute_download_xlsx': {
+                    "id": str(self.level) + "_" + self.fragment + "_process_selected_records",
+                    "title": "Downloaden",
+                    "tooltype": "button_href",
+                    "class": "btn btn-primary",
+                    "url": "/shared/execute_download_xlsx/?level=0&package=hours",
+                    "disabled": True,
+                    # "disabled_explanation": "Geen regels geselecteerd",
                 },
-            })
+            })  # window.open("/administration/export_list_xlsx_afas/?expdesc=" + document.getElementById('id_description_export').value, "_parent");
         self.columnfields = {  # Fieldtypes are: boolean, boolean_true, char, date, email, number, decimal, phone, sex, textarea, textarea_html, pill_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
             "issuedate": {
                 "caption": "Datum",
@@ -61,3 +63,6 @@ class Allhourlist(GlobalList):
             },
         }
         self.records = Hour.objects.filter().values(*self.columnfields.keys(), "id")
+        self.render_templates.update({
+            "list_inner_data_html": "shared/list/download_list_inner_data.html",
+        })

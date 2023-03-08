@@ -50,6 +50,28 @@
                         </span>
                     </div>
 
+                {% elif tooldata.tooltype == 'button_href' %}
+                    <div class="ms-2">
+                        <span class="{% if 'disabled_explanation' in tooldata %}d-inline-block{% endif %}"
+                                {% if tooldata.disabled and tooldata.disabled_explanation %}
+                              data-mdb-toggle="popover"
+                              data-mdb-trigger="hover focus"
+                              data-mdb-placement="bottom"
+                              data-mdb-content="{{ tooldata.disabled_explanation }}"
+                                {% endif %}
+                        >
+                            <button role="button"
+                                    id="{{ tooldata.id }}"
+                                    class="{{ tooldata.class }} btn-sm text-white"
+                                    data-mdb-ripple-color="dark"
+                                    onclick="do_url_href('{{ ctx.fragment }}', '{{ ctx.level|level_higher }}','{{ tooldata.url }}')"
+                                    {% if tooldata.disabled %}disabled{% endif %}
+                            >
+                                {{ tooldata.title }}
+                            </button>
+                        </span>
+                    </div>
+
                 {% elif tooldata.tooltype == 'href' %}
                     <div class="ms-2">
                         <button role="button"

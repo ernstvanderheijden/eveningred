@@ -7,6 +7,8 @@ app_name = "shared"
 
 urlpatterns = [
     path('action/save_right/<int:pk>/', views.save_right, name='save_right'),
+    path('execute_download_xlsx/', views.execute_download_xlsx, name='execute_download_xlsx'),
+
     # path('action/move_item/', views.move_item, name='move_up'),
 
     # path('action/actions/', action.actions, name='actions'),

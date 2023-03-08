@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404  #, redirect
 # from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 
+from hours.models import Hour
+from materials.models import Material
+from shared.export import export_list_xlsx_hours_or_materials
 from users.models import User
 
 
@@ -41,6 +44,39 @@ def save_right(request, pk):
     data['messagelist'] = ["Item opgeslagen", "success", "short"]  # messagelist: 0='message', 1='color', 2='short or long', 3='ajax or http', 4='link', 5='linkdescription'
     data['form_is_valid'] = True
     return JsonResponse(data)
+
+
+@csrf_exempt
+@login_required
+def execute_download_xlsx(request):
+    data = dict()
+    if not request.user.has_perm('projects.process_project'):
+        data['messagelist'] = ["Geen rechten", "danger", "short"]  # messagelist: 0='message', 1='color', 2='short or long', 3='ajax or http', 4='link', 5='linkdescription'
+        data['form_is_valid'] = False
+        return JsonResponse(data)
+
+    if request.GET.get('package', '') == 'hours':
+        modelname = 'Hour'
+        records = Hour.objects.filter().order_by("issuedate")
+    elif request.GET.get('package', '') == 'materials':
+        modelname = 'Material'
+        records = Material.objects.filter().order_by("issuedate")
+    else:
+        modelname = ''
+        records = Hour.objects.filter(id=-1)
+    id_list = list()
+    if request.GET.get('multiselect_records', ''):
+        id_list = [int(x) for x in request.GET.get('multiselect_records', '').split(",")]
+    records = records.filter(id__in=id_list)
+
+    if records:
+        # Download records
+        respons = export_list_xlsx_hours_or_materials(request, records, modelname)
+        return respons
+    else:
+        data['messagelist'] = ["Geen records geselecteerd", "danger", "short"]  # messagelist: 0='message', 1='color', 2='short or long', 3='ajax or http', 4='link', 5='linkdescription'
+        data['form_is_valid'] = False
+        return JsonResponse(data)
 
 
 # def move_item(request):

@@ -8,7 +8,7 @@ class Hour(models.Model):
     userid = models.ForeignKey("users.User", null=True, blank=True, on_delete=models.PROTECT, related_name='userid_hour')
     issuedate = models.DateField(null=True)
     amounthours = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    processdate = models.DateField(null=True, blank=True)
+    processdate = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     creatorid = models.ForeignKey("users.User", null=True, blank=True, on_delete=models.PROTECT, related_name='creatorid_hour')

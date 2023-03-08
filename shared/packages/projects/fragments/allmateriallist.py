@@ -12,7 +12,7 @@ class Allmateriallist(GlobalList):
         self.contenttitle = 'Alle materiaaluitgiftes'
         self.fragment = __class__.__name__.lower()
         self.fragmentrefresh = __class__.__name__.lower()
-        self.clickevent = 'detail'  # Action @ click on row (detail, update, selectsingle, selectmultiple)
+        self.clickevent = 'selectmultiple'  # Action @ click on row (detail, update, selectsingle, selectmultiple)
         self.order_by = "-issuedate"
         self.paginatesize_overwrite = ''
         self.successurl_decoded = "/core/fragment/?level=" + self.level + "&package=" + self.package + "&fragment=" + self.fragment + "&pk=" + str(self.pk) + "&fragmentrefresh=data_" + self.fragment + "&refreshtarget=data&page=1"
@@ -66,3 +66,6 @@ class Allmateriallist(GlobalList):
             },
         }
         self.records = Material.objects.filter().values(*self.columnfields.keys(), "id")
+        self.render_templates.update({
+            "list_inner_data_html": "shared/list/download_list_inner_data.html",
+        })

@@ -1,6 +1,16 @@
 var i = 0;
 var n = 0;
 
+function do_url_href(fragment, level, url) {
+    if (!url.includes('&multiselect_records')) {
+        url = url + "&multiselect_records="
+        if ($('#' + (level - 1).toString() + '_' + fragment + '_multiselect_records').length > 0) {
+            url = url + document.getElementById((level - 1).toString() + '_' + fragment + '_multiselect_records').value
+        }
+    }
+    window.open(url, "_parent")
+}
+
 function do_url(fragment, level, url) {
     if (!fragment) {
         fragment = 'chapter'
