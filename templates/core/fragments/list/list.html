@@ -1,7 +1,7 @@
 {% if ctx.level > '0' %}
     <div id="{{ ctx.level }}_{{ ctx.fragment }}" class="col-lg-{{ fragmentdata.width }}" data-refreshtarget-fragment="{{ ctx.level }}_{{ ctx.fragment }}">
 {% endif %}
-        <div class="container-fluid h-100 p-0 border bg-white rounded-6 shadow-sm">
+        <div class="container-fluid h-100 p-0 border bg-white rounded-6 shadow-sm overflow-auto">
             <div class="row">
                 <div class="col">
                     <nav class="navbar shadow-1 bg-light bg-gradient rounded-bottom rounded-6">

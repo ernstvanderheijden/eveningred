@@ -6,6 +6,7 @@ from core.globals.global_functions import encode_string
 from materials.models import Material
 
 nameform = 'materialform'
+crudname = 'crud'
 
 
 class Materiallist(GlobalList):
@@ -15,11 +16,11 @@ class Materiallist(GlobalList):
         self.fragment = __class__.__name__.lower()
         self.fragmentrefresh = __class__.__name__.lower()
         self.clickevent = 'detail'  # Action @ click on row (detail, update, selectsingle, selectmultiple)
-        self.onclick = "window.open('/core/template/?level=0&package=" + self.package + "&chapter=detail&pk=pk_replace', '_parent')"
+        self.successurl_decoded = "/core/fragment/?level=" + self.level + "&package=" + self.package + "&fragment=" + self.fragment + "&pk=" + str(self.pk) + "&fragmentrefresh=data_" + self.fragment + "&refreshtarget=data&page=1"
+        self.onclick = "do_url('" + self.fragment + "', " + str(int(self.level) + 1) + ", '/core/update/pk_replace/?level=" + str(int(self.level) + 1) + "&package=" + self.package + "&crud=" + crudname + "&fk=&pk=pk_replace&nameform=" + nameform + "&successurl=" + encode_string(self.successurl_decoded) + "')"
         self.order_by = "-issuedate"
         self.paginatesize_overwrite = ''
         self.displayfield = 'description'
-        self.successurl_decoded = "/core/fragment/?level=" + self.level + "&package=" + self.package + "&fragment=" + self.fragment + "&pk=" + str(self.pk) + "&fragmentrefresh=data_" + self.fragment + "&refreshtarget=data&page=1"
         if request.user.has_perm('materials.add_material'):
             self.tools.update({
                 'create': {
@@ -63,4 +64,4 @@ class Materiallist(GlobalList):
         }
         configuration = Configuration.objects.get(is_default=True)
         datefrom = datetime.datetime.today() - datetime.timedelta(days=configuration.days_history)
-        self.records = Material.objects.filter(userid=request.user.id, issuedate__gte=datefrom).values(*self.columnfields.keys(), "id")
+        self.records = Material.objects.filter(userid=request.user.id, processdate__isnull=True).values(*self.columnfields.keys(), "id")
