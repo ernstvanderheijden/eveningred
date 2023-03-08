@@ -12,9 +12,6 @@ from django.shortcuts import redirect
 def collect_data_exportlist_hours_or_materials(request, records, modelname):
     amountrecs = records.count()
     if amountrecs > 0:
-        # Save the Now to the processdate
-        records.update(processdate=datetime.datetime.now())
-
         if modelname == 'Hour':
             records = getfields_hours(records)
             return records
@@ -51,7 +48,7 @@ def getfields_hours(records):
 def getfields_materials(records):
     records = records.annotate(fullname=Concat('userid__first_name', Value(' '), 'userid__insertion', Value(' '), 'userid__last_name', output_field=CharField()),
                                creator=Concat('creatorid__first_name', Value(' '), 'creatorid__insertion', Value(' '), 'creatorid__last_name', output_field=CharField()),
-                               updator=Concat('updaterid__first_name', Value(' '), 'updaterid__insertion', Value(' '), 'updaterid__last_name', output_field=CharField()),
+                               updater=Concat('updaterid__first_name', Value(' '), 'updaterid__insertion', Value(' '), 'updaterid__last_name', output_field=CharField()),
                                )
     records = records.values(ID=F('id'),
                              Medewerker=F('fullname'),
@@ -106,6 +103,9 @@ def export_list_csv_hours_or_materials(request, records, modelname):
 
         for row in rows:
             writer.writerow(row.values())
+
+        # Save the Now to the processdate
+        records.update(processdate=datetime.datetime.now())
 
         return response
     else:
@@ -178,6 +178,9 @@ def export_list_xlsx_hours_or_materials(request, records, modelname):
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        # Save the Now to the processdate
+        records.update(processdate=datetime.datetime.now())
 
         return response
     else:

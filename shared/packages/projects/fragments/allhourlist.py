@@ -29,7 +29,7 @@ class Allhourlist(GlobalList):
                     "disabled": True,
                     # "disabled_explanation": "Geen regels geselecteerd",
                 },
-            })  # window.open("/administration/export_list_xlsx_afas/?expdesc=" + document.getElementById('id_description_export').value, "_parent");
+            })
         self.columnfields = {  # Fieldtypes are: boolean, boolean_true, char, date, email, number, decimal, phone, sex, textarea, textarea_html, pill_list, editable_number, editable_dropdown, status_choice, status_contract, status_invoice
             "issuedate": {
                 "caption": "Datum",
